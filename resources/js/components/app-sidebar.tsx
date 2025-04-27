@@ -49,7 +49,7 @@ export function AppSidebar() {
                       items: [
                           {
                               title: 'Sekolah',
-                              href: '/sekolah',
+                              href: '/sekolahs',
                           },
                           {
                               title: 'Siswa',
@@ -57,7 +57,7 @@ export function AppSidebar() {
                           },
                           {
                               title: 'Mata Pelajaran',
-                              href: '/mapel',
+                              href: '/mapels',
                           },
                           {
                               title: 'User',

@@ -15,8 +15,8 @@ class Mapel extends Model
         'active',
     ];
 
-    public function userProfile()
-    {
-        return $this->hasMany(UserProfile::class);
-    }
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
 }

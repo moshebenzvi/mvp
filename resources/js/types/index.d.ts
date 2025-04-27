@@ -66,6 +66,7 @@ export interface User {
     email: string;
     avatar?: string;
     email_verified_at: string | null;
+    roles: string;
     created_at: string;
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
@@ -83,4 +84,19 @@ export interface UserController {
     gugus: string;
     role: string;
     [key: string]: unknown; // This allows for additional properties...
+}
+
+export interface SekolahController {
+    id: number;
+    nama: string;
+    npsn: string;
+    nama_kecamatan: string;
+    gugus: string;
+    [key: string]: unknown; // This allows for additional properties...
+}
+
+export interface MapelController {
+    id: number;
+    nama: string;
+    active: boolean;
 }

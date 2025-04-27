@@ -1,9 +1,8 @@
-import { type MapelController } from '@/types';
+import { type SekolahController } from '@/types';
 import { ColumnDef } from '@tanstack/react-table';
 import { DataTableColumnHeader } from '@/components/data-table-column-header';
-import { Switch } from "@/components/ui/switch"
 
-export const columns: ColumnDef<MapelController>[] = [
+export const columns: ColumnDef<SekolahController>[] = [
     {
         accessorKey: 'id',
         header: ({ column }) => (
@@ -20,14 +19,24 @@ export const columns: ColumnDef<MapelController>[] = [
         ),
     },
     {
-        accessorKey: 'active',
+        accessorKey: 'npsn',
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Active" />
+            <DataTableColumnHeader column={column} title="NPSN" />
+        ),
+    },
+    {
+        accessorKey: 'nama_kecamatan',
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Kecamatan" />
+        ),
+    },
+    {
+        accessorKey: 'gugus',
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Gugus" />
         ),
         cell: ({ row }) => {
-            return <div className="text-center">
-                <Switch checked={row.getValue('active')} onChange={() => {}}/>
-                    </div>;
+            return <div className="text-center">{row.getValue('id')}</div>;
         },
     }
 ];

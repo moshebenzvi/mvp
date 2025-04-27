@@ -1,28 +1,24 @@
 <?php
 
-use App\Http\Controllers\UserController;
-use App\Models\Gugus;
-use App\Models\Kecamatan;
-use App\Models\UserProfile;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\KecamatanController;
 
 // Route::get('/', function () {
 //     return Inertia::render('welcome');
 // })->name('home');
 
 Route::get('/coba', function () {
-    return \App\Models\User::with('roles', 'userProfile', 'userProfile.guguses', 'userProfile.kecamatan')
-        ->get()
-        ->map(function ($user) {
-            $user->kecamatan = $user->userProfile?->kecamatan->nama;
-            $user->gugus = $user->userProfile?->guguses->gugus; 
-            $user->role = $user->roles->first()?->name; 
-            unset($user->roles); // remove the original roles array
-            unset($user->userProfile); // remove the original userProfile object
-            return $user;
-        });
+    return \App\Models\Sekolah::with('guguses', 'kecamatan')
+    ->get()
+    ->map(function ($sekolah) {
+        $sekolah->gugus = $sekolah->guguses->gugus;
+        $sekolah->nama_kecamatan = $sekolah->kecamatan->nama;
+        unset($sekolah->guguses);
+        unset($sekolah->kecamatan);
+        unset($sekolah->guguses_id);
+        unset($sekolah->kecamatan_id);
+        return $sekolah;
+    });
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -34,7 +30,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
 
-    Route::get('users', [UserController::class, 'index'])->name('users.index');
+
+    Route::middleware(['role:Admin'])->group(function () {
+        Route::get('sekolahs', [\App\Http\Controllers\SekolahController::class, 'index'])->name('sekolahs.index');
+        Route::get('users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
+        Route::get('mapels', [App\Http\Controllers\MapelController::class, 'index'])->name('mapels.index');
+    });
+
 });
 
 require __DIR__ . '/settings.php';

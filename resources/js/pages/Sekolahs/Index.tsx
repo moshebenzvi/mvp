@@ -1,9 +1,8 @@
 import AppLayout from '@/layouts/app-layout';
-import { type BreadcrumbItem, type UserController } from '@/types';
+import { type BreadcrumbItem, type SekolahController } from '@/types';
 import { Head } from '@inertiajs/react';
 import { DataTable } from '@/components/data-table';
 import { columns } from './tableColumns';
-
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -11,18 +10,18 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '#',
     },
     {
-        title: 'User',
-        href: '/users',
+        title: 'Sekolah',
+        href: '/sekolahs',
     },
 ];
 
-export default function Index({ users }: { users: UserController[] }) {
+export default function Index({ sekolahs }: { sekolahs: SekolahController[] }) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Users" />
+            <Head title="Sekolah" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl md:min-h-min">
-                    <DataTable columns={columns} data={users} filterData='name' />
+                    <DataTable columns={columns} data={sekolahs} filterData='nama' />
                 </div>
             </div>
         </AppLayout>

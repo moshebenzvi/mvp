@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Admin User',
             'email' => 'admin@admin.com',
-            'password' => bcrypt('2XW5dfBjdWgqmLX'),
+            'password' => bcrypt('password'),
         ])->assignRole('Admin');
 
         User::factory(20)->create();
@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        \App\Models\Gugus::factory(10)->create();
+        \App\Models\Gugus::factory(40)->create();
 
         $subjects = ['PABP', 'PENDIDIKAN PANCASILA', 'IPAS', 'BAHASA JAWA', 'BAHASA INDONESIA', 'SENI BUDAYA', 'BAHASA INGGRIS', 'PJOK', 'MATEMATIKA'];
         foreach ($subjects as $subject) {
@@ -45,6 +45,8 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        \App\Models\UserProfile::factory(10)->create();
+        \App\Models\UserProfile::factory(21)->create();
+
+        \App\Models\Sekolah::factory(478)->create();
     }
 }
