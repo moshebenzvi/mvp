@@ -19,4 +19,19 @@ class Mapel extends Model
         'created_at',
         'updated_at',
     ];
+
+    public function nilais()
+    {
+        return $this->hasMany(Nilai::class);
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('active', true);
+    }
+
+    public function scopeInactive($query)
+    {
+        return $query->where('active', false);
+    }
 }

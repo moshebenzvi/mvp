@@ -1,7 +1,7 @@
 import { DataTable } from '@/components/data-table';
 import AppLayout from '@/layouts/app-layout';
 import { columns } from '@/pages/Mapels/tableColumns';
-import type { BreadcrumbItem, MapelController } from '@/types';
+import type { BreadcrumbItem, Mapel } from '@/types';
 import { Head } from '@inertiajs/react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -15,7 +15,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Index({ mapels }: { mapels: MapelController[] }) {
+export default function Index({ mapels }: { mapels: Mapel[] }) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Mata Pelajaran" />

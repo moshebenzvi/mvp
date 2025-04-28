@@ -1,4 +1,4 @@
-import { type UserController } from '@/types';
+import type { UserController } from '@/types';
 import { ColumnDef } from '@tanstack/react-table';
 import { DataTableColumnHeader } from '@/components/data-table-column-header';
 

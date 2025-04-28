@@ -9,11 +9,11 @@ class NilaiController extends Controller
     public function index()
     {
         $korektor = auth()->user()->load(['userProfile.kecamatan', 'userProfile.guguses.sekolahs.siswas.nilais.mapel']);
-        $mapel = \App\Models\Mapel::where('active', '1')->get();
+        $mapel = \App\Models\Mapel::active()->get()->toArray();;
 
         return inertia('Nilais/Index', [
             'korektor' => $korektor,
-            'mapel' => $mapel,
+            'mapels' => $mapel,
         ]);
     }
 

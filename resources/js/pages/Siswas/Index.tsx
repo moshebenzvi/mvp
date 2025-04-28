@@ -1,5 +1,5 @@
 import AppLayout from '@/layouts/app-layout';
-import { type BreadcrumbItem, type SiswaController } from '@/types';
+import type { BreadcrumbItem, SiswaController } from '@/types';
 import { Head } from '@inertiajs/react';
 import { DataTable } from '@/components/data-table';
 import { columns } from './tableColumns';

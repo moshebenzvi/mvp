@@ -1,10 +1,10 @@
-import { type MapelController } from '@/types';
+import type { Mapel } from '@/types';
 import { ColumnDef } from '@tanstack/react-table';
 import { DataTableColumnHeader } from '@/components/data-table-column-header';
 import { Switch } from "@/components/ui/switch"
 import { router } from '@inertiajs/react';
 
-export const columns: ColumnDef<MapelController>[] = [
+export const columns: ColumnDef<Mapel>[] = [
     {
         accessorKey: 'id',
         header: ({ column }) => (

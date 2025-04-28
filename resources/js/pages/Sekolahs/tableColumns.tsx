@@ -1,5 +1,5 @@
 import { DataTableColumnHeader } from '@/components/data-table-column-header';
-import { type SekolahController } from '@/types';
+import type { SekolahController } from '@/types';
 import { ColumnDef } from '@tanstack/react-table';
 
 export const columns: ColumnDef<SekolahController>[] = [

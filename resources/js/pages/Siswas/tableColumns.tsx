@@ -1,4 +1,4 @@
-import { type SiswaController } from '@/types';
+import type { SiswaController } from '@/types';
 import { ColumnDef } from '@tanstack/react-table';
 import { DataTableColumnHeader } from '@/components/data-table-column-header';
 
