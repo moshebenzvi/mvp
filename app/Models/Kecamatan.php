@@ -29,4 +29,9 @@ class Kecamatan extends Model
     {
         return $this->hasMany(Gugus::class);
     }
+
+    public function sekolahs(): HasMany
+    {
+        return $this->hasMany(Sekolah::class);
+    }
 }

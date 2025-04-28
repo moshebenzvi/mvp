@@ -16,6 +16,10 @@ class Gugus extends Model
         'gugus',
         'kecamatan_id',
     ];
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
 
     public function kecamatan(): BelongsTo
     {
@@ -30,5 +34,10 @@ class Gugus extends Model
     public function userProfile(): HasMany
     {
         return $this->hasMany(UserProfile::class);
+    }
+
+    public function sekolahs(): HasMany
+    {
+        return $this->hasMany(Sekolah::class, 'guguses_id');
     }
 }

@@ -45,10 +45,44 @@ export interface Kecamatan {
     nama: string;
 }
 
-export interface Gugus {
+export interface Guguses {
     id: number;
     gugus: number;
     kecamatan_id: number;
+    sekolahs?: Sekolah[];
+}
+
+export interface Sekolah {
+    id: number;
+    nama: string;
+    npsn: string;
+    guguses_id: number;
+    kecamatan_id: number;
+    siswas: Siswa[];
+}
+
+export interface Siswa {
+    id: number;
+    nama: string;
+    kelamin: string;
+    nisn: string;
+    sekolah_id: number;
+    nilais: Nilai[];
+    tempNilai?: string; // For form state
+}
+
+export interface Nilai {
+    id: number;
+    siswa_id: number;
+    mapel_id: number;
+    nilai: string;
+    mapel: Mapel;
+}
+
+export interface Mapel {
+    id: number;
+    nama: string;
+    active: number;
 }
 
 export interface UserProfile {
@@ -57,7 +91,7 @@ export interface UserProfile {
     guguses_id: number;
     kecamatan_id: number;
     kecamatan: Kecamatan;
-    guguses: Gugus;
+    guguses: Guguses;
 }
 
 export interface User {
@@ -69,9 +103,9 @@ export interface User {
     roles: string;
     created_at: string;
     updated_at: string;
+    user_profile: UserProfile;
     [key: string]: unknown; // This allows for additional properties...
 }
-
 /*
     Controller
 */
@@ -83,20 +117,25 @@ export interface UserController {
     kecamatan: string;
     gugus: string;
     role: string;
-    [key: string]: unknown; // This allows for additional properties...
+    // [key: string]: unknown; // This allows for additional properties...
 }
 
 export interface SekolahController {
     id: number;
     nama: string;
-    npsn: string;
+    npsn: number;
     nama_kecamatan: string;
-    gugus: string;
-    [key: string]: unknown; // This allows for additional properties...
+    gugus: number;
+    siswas_count: number;
 }
 
-export interface MapelController {
+
+
+export interface SiswaController {
     id: number;
     nama: string;
-    active: boolean;
+    nisn: string;
+    nama_sekolah: string;
+    npsn_sekolah: string;
+    nama_kecamatan: string;
 }

@@ -30,4 +30,9 @@ class Sekolah extends Model
     {
         return $this->belongsTo(Kecamatan::class);
     }
+
+    public function siswas()
+    {
+        return $this->hasMany(Siswa::class);
+    }
 }

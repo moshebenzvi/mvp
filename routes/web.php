@@ -8,17 +8,18 @@ use Inertia\Inertia;
 // })->name('home');
 
 Route::get('/coba', function () {
-    return \App\Models\Sekolah::with('guguses', 'kecamatan')
-    ->get()
-    ->map(function ($sekolah) {
-        $sekolah->gugus = $sekolah->guguses->gugus;
-        $sekolah->nama_kecamatan = $sekolah->kecamatan->nama;
-        unset($sekolah->guguses);
-        unset($sekolah->kecamatan);
-        unset($sekolah->guguses_id);
-        unset($sekolah->kecamatan_id);
-        return $sekolah;
-    });
+    return \App\Models\Siswa::with('sekolah', 'sekolah.kecamatan')
+        ->get()
+        ->map(function ($siswa) {
+            $siswa->nama_sekolah = $siswa->sekolah->nama;
+            $siswa->npsn_sekolah = $siswa->sekolah->npsn;
+            $siswa->nama_kecamatan = $siswa->sekolah->kecamatan->nama;
+            unset($siswa->sekolah);
+            unset($siswa->sekolah_id);
+            unset($siswa->kecamatan);
+            unset($siswa->kecamatan_id);
+            return $siswa;
+        });
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -34,7 +35,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware(['role:Admin'])->group(function () {
         Route::get('sekolahs', [\App\Http\Controllers\SekolahController::class, 'index'])->name('sekolahs.index');
         Route::get('users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
-        Route::get('mapels', [App\Http\Controllers\MapelController::class, 'index'])->name('mapels.index');
+        Route::resource('mapels', App\Http\Controllers\MapelController::class)->only(['index', 'update']);
+        Route::get('siswas', [\App\Http\Controllers\SiswaController::class, 'index'])->name('siswas.index');
+    });
+
+    Route::middleware(['role:Korektor'])->group(function () {
+        Route::get('nilais', [\App\Http\Controllers\NilaiController::class, 'index'])->name('nilais.index');
     });
 
 });

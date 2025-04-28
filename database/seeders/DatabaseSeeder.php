@@ -19,7 +19,6 @@ class DatabaseSeeder extends Seeder
         Role::create(['name' => 'Operator']);
         Role::create(['name' => 'Korektor']);
 
-
         User::factory()->create([
             'name' => 'Admin User',
             'email' => 'admin@admin.com',
@@ -27,6 +26,12 @@ class DatabaseSeeder extends Seeder
         ])->assignRole('Admin');
 
         User::factory(20)->create();
+
+        $korektor = User::factory()->create([
+            'name' => 'Korektor User',
+            'email' => 'korektor@korektor.com',
+            'password' => bcrypt('password'),
+        ])->assignRole('Korektor')->id;
 
         $kecamatans = ['Panggul', 'Munjungan', 'Pule', 'Dongko', 'Tugu', 'Karangan', 'Kampak', 'Watulimo', 'Bendungan', 'Gandusari', 'Trenggalek', 'Pogalan', 'Durenan', 'Suruh'];
         foreach ($kecamatans as $kecamatan) {
@@ -48,5 +53,15 @@ class DatabaseSeeder extends Seeder
         \App\Models\UserProfile::factory(21)->create();
 
         \App\Models\Sekolah::factory(478)->create();
+
+        \App\Models\Siswa::factory(1000)->create();
+
+        \App\Models\UserProfile::factory()->create([
+            'user_id' => $korektor,
+            'guguses_id' => \App\Models\Gugus::inRandomOrder()->first()->id,
+            'kecamatan_id' => \App\Models\Kecamatan::inRandomOrder()->first()->id,
+        ]);
+
+        \App\Models\Nilai::factory(100)->create();
     }
 }

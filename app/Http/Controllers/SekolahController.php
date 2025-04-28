@@ -7,7 +7,7 @@ class SekolahController extends Controller
     public function index()
     {
         return inertia('Sekolahs/Index', [
-            'sekolahs' => \App\Models\Sekolah::with('guguses', 'kecamatan')
+            'sekolahs' => \App\Models\Sekolah::with('guguses', 'kecamatan')->withCount('siswas')
                 ->get()
                 ->map(function ($sekolah) {
                     $sekolah->gugus = $sekolah->guguses->gugus;

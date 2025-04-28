@@ -23,7 +23,7 @@ export function AppSidebar() {
             ? [
                   {
                       title: 'Input Nilai',
-                      href: '/nilai',
+                      href: '/nilais',
                   },
               ]
             : []),
@@ -33,11 +33,11 @@ export function AppSidebar() {
             items: [
                 {
                     title: 'Ranking Siswa',
-                    href: '/rankings/siswa',
+                    href: '/ranking/siswas',
                 },
                 {
                     title: 'Ranking Sekolah',
-                    href: '/rankings/sekolah',
+                    href: '/ranking/sekolahs',
                 },
             ],
         },
@@ -53,7 +53,7 @@ export function AppSidebar() {
                           },
                           {
                               title: 'Siswa',
-                              href: '/siswa',
+                              href: '/siswas',
                           },
                           {
                               title: 'Mata Pelajaran',

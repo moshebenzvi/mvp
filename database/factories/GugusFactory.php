@@ -16,9 +16,24 @@ class GugusFactory extends Factory
      */
     public function definition(): array
     {
+        static $combinations = null;
+
+        if ($combinations === null) {
+            $kecamatanIds = \App\Models\Kecamatan::pluck('id')->toArray();
+            $combinations = collect($kecamatanIds)
+                ->crossJoin(range(1, 3)) // Generate all combinations of kecamatan_id and gugus
+                ->shuffle(); // Randomize the order
+        }
+
+        if ($combinations->isEmpty()) {
+            throw new \Exception('No more unique combinations available.');
+        }
+
+        [$kecamatan_id, $gugus] = $combinations->pop();
+
         return [
-            'gugus' => $this->faker->numberBetween(1, 5),
-            'kecamatan_id' => \App\Models\Kecamatan::inRandomOrder()->first()->id,
+            'gugus' => $gugus,
+            'kecamatan_id' => $kecamatan_id,
         ];
     }
 }
