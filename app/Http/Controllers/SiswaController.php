@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class SiswaController extends Controller
@@ -22,5 +23,24 @@ class SiswaController extends Controller
                     return $siswa;
                 })
         ]);
+    }
+
+    public function refresh(Request $request): JsonResponse
+    {
+        $sekolahId = $request->query('sekolah_id');
+        $mapelId = $request->query('mapel_id');
+
+        // Get the school with its students and their grades for the specified mapel
+        $school = \App\Models\Sekolah::with([
+            'siswas.nilais' => function ($query) use ($mapelId) {
+                $query->where('mapel_id', $mapelId);
+            }
+        ])->find($sekolahId);
+
+        if (!$school) {
+            return response()->json([], 404);
+        }
+
+        return response()->json($school->siswas);
     }
 }

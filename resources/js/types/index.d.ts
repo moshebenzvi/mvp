@@ -69,6 +69,7 @@ export interface Siswa {
     sekolah_id: number;
     nilais: Nilai[];
     tempNilai?: string; // For form state
+    hasExistingNilai?: boolean // Flag to track if nilai already exists
 }
 
 export interface Nilai {

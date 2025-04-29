@@ -40,7 +40,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::middleware(['role:Korektor'])->group(function () {
-        Route::get('nilais', [\App\Http\Controllers\NilaiController::class, 'index'])->name('nilais.index');
+        // Route::get('nilais', [\App\Http\Controllers\NilaiController::class, 'index'])->name('nilais.index');
+        Route::resource('nilais', \App\Http\Controllers\NilaiController::class)->only(['index', 'store']);
+        Route::get('siswas/refresh', [\App\Http\Controllers\SiswaController::class, 'refresh'])->name('siswas.refresh');
     });
 
 });
