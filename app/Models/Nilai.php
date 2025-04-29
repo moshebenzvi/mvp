@@ -19,10 +19,17 @@ class Nilai extends Model
         'created_at',
         'updated_at',
     ];
-    
-    protected $casts = [
-        'nilai' => 'decimal:2',
-    ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($model) {
+            if ($model->nilai < 0 || $model->nilai > 100) {
+                throw new \Exception('Nilai must be between 0 and 100.');
+            }
+        });
+    }
 
     public function mapel()
     {

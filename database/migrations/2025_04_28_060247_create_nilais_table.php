@@ -15,9 +15,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('siswa_id')->constrained()->cascadeOnDelete();
             $table->foreignId('mapel_id')->constrained()->cascadeOnDelete();
-            $table->decimal('nilai', 5, 2);
+            $table->integer('nilai');
             $table->unique(['siswa_id', 'mapel_id']);
             $table->timestamps();
+
+            $table->index('nilai'); // Added index
+            $table->index(['mapel_id', 'nilai']); // Added composite index
         });
     }
 

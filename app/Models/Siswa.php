@@ -30,4 +30,9 @@ class Siswa extends Model
     {
         return $this->hasMany(Nilai::class);
     }
+
+    public function ranking()
+    {
+        return $this->hasOne(RankingSiswa::class, 'siswa_id');
+    }
 }

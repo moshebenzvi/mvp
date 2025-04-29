@@ -35,4 +35,13 @@ class Sekolah extends Model
     {
         return $this->hasMany(Siswa::class);
     }
+
+    public function ranking()
+    {
+        return $this->hasOne(RankingSekolah::class, 'sekolah_id');
+    }
+    public function rankingSiswa()
+    {
+        return $this->hasMany(RankingSiswa::class, 'sekolah_id');
+    }
 }

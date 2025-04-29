@@ -8,18 +8,9 @@ use Inertia\Inertia;
 // })->name('home');
 
 Route::get('/coba', function () {
-    return \App\Models\Siswa::with('sekolah', 'sekolah.kecamatan')
-        ->get()
-        ->map(function ($siswa) {
-            $siswa->nama_sekolah = $siswa->sekolah->nama;
-            $siswa->npsn_sekolah = $siswa->sekolah->npsn;
-            $siswa->nama_kecamatan = $siswa->sekolah->kecamatan->nama;
-            unset($siswa->sekolah);
-            unset($siswa->sekolah_id);
-            unset($siswa->kecamatan);
-            unset($siswa->kecamatan_id);
-            return $siswa;
-        });
+    return \App\Models\Sekolah::with('rankingSiswa')
+    // ->orderBy('AVG_Nilai', 'desc')
+    ->get();
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {

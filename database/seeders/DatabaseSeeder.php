@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password'),
         ])->assignRole('Admin');
 
-        User::factory(20)->create();
+        // User::factory(20)->create();
 
         $korektor = User::factory()->create([
             'name' => 'Korektor User',
@@ -50,7 +50,7 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        \App\Models\UserProfile::factory(21)->create();
+        // \App\Models\UserProfile::factory(21)->create();
 
         \App\Models\Sekolah::factory(478)->create();
 
@@ -62,6 +62,6 @@ class DatabaseSeeder extends Seeder
             'kecamatan_id' => \App\Models\Kecamatan::inRandomOrder()->first()->id,
         ]);
 
-        \App\Models\Nilai::factory(100)->create();
+        \App\Models\Nilai::factory(2000)->create();
     }
 }

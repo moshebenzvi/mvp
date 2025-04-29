@@ -19,6 +19,12 @@ export const columns: ColumnDef<SiswaController>[] = [
         ),
     },
     {
+        accessorKey: 'kelamin',
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="L/P" />
+        ),
+    },
+    {
         accessorKey: 'nisn',
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="NISN" />
