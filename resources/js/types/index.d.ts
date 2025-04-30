@@ -69,7 +69,7 @@ export interface Siswa {
     sekolah_id: number;
     nilais: Nilai[];
     tempNilai?: string; // For form state
-    hasExistingNilai?: boolean // Flag to track if nilai already exists
+    hasExistingNilai?: boolean; // Flag to track if nilai already exists
 }
 
 export interface Nilai {
@@ -130,8 +130,6 @@ export interface SekolahController {
     siswas_count: number;
 }
 
-
-
 export interface SiswaController {
     id: number;
     nama: string;
@@ -139,4 +137,48 @@ export interface SiswaController {
     nama_sekolah: string;
     npsn_sekolah: string;
     nama_kecamatan: string;
+}
+
+export interface RangkingSiswaController {
+    siswa_id: number;
+    sekolah_id: number;
+    PABP: number | null;
+    PENDIDIKAN_PANCASILA: number | null;
+    IPAS: number | null;
+    BAHASA_JAWA: number | null;
+    BAHASA_INDONESIA: number | null;
+    SENI_BUDAYA: number | null;
+    BAHASA_INGGRIS: number | null;
+    PJOK: number | null;
+    MATEMATIKA: number | null;
+    count_nilai: number | null;
+    avg_nilai: number | null;
+    siswa_nama: string;
+    nisn: string;
+    sekolah_nama: string;
+    npsn: string;
+    kecamatan: string;
+    gugus: number;
+}
+
+export interface RangkingSekolahController {
+    sekolah_id: number;
+    jumlah_siswa: number;
+    PABP: boolean;
+    PENDIDIKAN_PANCASILA: boolean;
+    IPAS: boolean;
+    BAHASA_JAWA: boolean;
+    BAHASA_INDONESIA: boolean;
+    SENI_BUDAYA: boolean;
+    BAHASA_INGGRIS: boolean;
+    PJOK: boolean;
+    MATEMATIKA: boolean;
+    wajib_nilai: number;
+    sudah_nilai: number;
+    avg_nilai: number;
+    sekolah_nama: string;
+    npsn: string;
+    kecamatan_id: number;
+    kecamatan_nama: string;
+    gugus: number;
 }

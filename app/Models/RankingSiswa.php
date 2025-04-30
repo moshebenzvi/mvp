@@ -20,7 +20,7 @@ class RankingSiswa extends Model
         'BAHASA_INGGRIS' => 'decimal:2',
         'PJOK' => 'decimal:2',
         'MATEMATIKA' => 'decimal:2',
-        'AVG_Nilai' => 'decimal:2',
+        'avg_nilai' => 'decimal:2',
     ];
 
     public function siswa()

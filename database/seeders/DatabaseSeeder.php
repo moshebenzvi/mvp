@@ -40,8 +40,6 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        \App\Models\Gugus::factory(40)->create();
-
         $subjects = ['PABP', 'PENDIDIKAN PANCASILA', 'IPAS', 'BAHASA JAWA', 'BAHASA INDONESIA', 'SENI BUDAYA', 'BAHASA INGGRIS', 'PJOK', 'MATEMATIKA'];
         foreach ($subjects as $subject) {
             \App\Models\Mapel::factory()->create([
@@ -52,16 +50,18 @@ class DatabaseSeeder extends Seeder
 
         // \App\Models\UserProfile::factory(21)->create();
 
-        \App\Models\Sekolah::factory(478)->create();
+        \App\Models\Gugus::factory(28)->create();
 
-        \App\Models\Siswa::factory(1000)->create();
+        \App\Models\Sekolah::factory(28)->create();
+
+        \App\Models\Siswa::factory(56)->create();
+
+        \App\Models\Nilai::factory(404)->create();
 
         \App\Models\UserProfile::factory()->create([
             'user_id' => $korektor,
             'guguses_id' => \App\Models\Gugus::inRandomOrder()->first()->id,
             'kecamatan_id' => \App\Models\Kecamatan::inRandomOrder()->first()->id,
         ]);
-
-        \App\Models\Nilai::factory(2000)->create();
     }
 }

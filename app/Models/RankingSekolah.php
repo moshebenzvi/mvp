@@ -9,7 +9,7 @@ class RankingSekolah extends Model
     protected $table = 'ranking_sekolahs';
     public $timestamps = false;
     protected $casts = [
-        'AVG_Nilai' => 'decimal:2',
+        'avg_nilai' => 'decimal:2',
     ];
     public $incrementing = false;
     protected $primaryKey = 'sekolah_id';
