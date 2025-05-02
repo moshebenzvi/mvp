@@ -57,6 +57,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('ranking/siswas', [\App\Http\Controllers\RankingSiswaController::class, 'index'])->name('ranking.siswas.index');
     Route::get('ranking/sekolahs', [\App\Http\Controllers\RankingSekolahController::class, 'index'])->name('ranking.sekolahs.index');
+    Route::get('ranking/sekolahs/refresh', [\App\Http\Controllers\RankingSekolahController::class, 'refresh'])->name('ranking.sekolahs.refresh');
 });
 
 require __DIR__ . '/settings.php';

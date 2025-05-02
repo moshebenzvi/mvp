@@ -50,13 +50,13 @@ class DatabaseSeeder extends Seeder
 
         // \App\Models\UserProfile::factory(21)->create();
 
-        \App\Models\Gugus::factory(28)->create();
+        \App\Models\Gugus::factory(40)->create();
 
-        \App\Models\Sekolah::factory(28)->create();
+        \App\Models\Sekolah::factory(50)->create();
 
-        \App\Models\Siswa::factory(56)->create();
+        \App\Models\Siswa::factory(250)->create();
 
-        \App\Models\Nilai::factory(404)->create();
+        \App\Models\Nilai::factory(250*7)->create(); // siswa * 9
 
         \App\Models\UserProfile::factory()->create([
             'user_id' => $korektor,

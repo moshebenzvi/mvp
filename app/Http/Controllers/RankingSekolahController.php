@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 
 class RankingSekolahController extends Controller
 {
-    public function index()
+    private function getRankings()
     {
-        $rankings = \App\Models\RankingSekolah::with('sekolah', 'sekolah.kecamatan', 'sekolah.guguses')
+        return \App\Models\RankingSekolah::with('sekolah', 'sekolah.kecamatan', 'sekolah.guguses')
             ->get()
             ->map(function ($ranking) {
                 $ranking->sekolah_nama = $ranking->sekolah->nama;
@@ -19,9 +19,17 @@ class RankingSekolahController extends Controller
                 unset($ranking->sekolah);
                 return $ranking;
             });
-
+    }
+    public function index()
+    {
+        $rankings = $this->getRankings();
         return inertia('Rankings/Sekolah/Index', [
             'rankings' => $rankings,
         ]);
+    }
+    public function refresh()
+    {
+        $rankings = $this->getRankings();
+        return response()->json($rankings);
     }
 }

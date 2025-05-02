@@ -15,23 +15,23 @@ return new class extends Migration {
             SELECT
                 rs.sekolah_id,
                 COUNT(s.sekolah_id) AS jumlah_siswa,
-                IF (COUNT(rs.PABP)=COUNT(s.sekolah_id), 1, 0) AS PABP,
-                IF (COUNT(rs.PENDIDIKAN_PANCASILA)=COUNT(s.sekolah_id), 1, 0) AS PENDIDIKAN_PANCASILA,
-                IF (COUNT(rs.IPAS)=COUNT(s.sekolah_id), 1, 0) AS IPAS,
-                IF (COUNT(rs.BAHASA_JAWA)=COUNT(s.sekolah_id), 1, 0) AS BAHASA_JAWA,
-                IF (COUNT(rs.BAHASA_INDONESIA)=COUNT(s.sekolah_id), 1, 0) AS BAHASA_INDONESIA,
-                IF (COUNT(rs.SENI_BUDAYA)=COUNT(s.sekolah_id), 1, 0) AS SENI_BUDAYA,
-                IF (COUNT(rs.BAHASA_INGGRIS)=COUNT(s.sekolah_id), 1, 0) AS BAHASA_INGGRIS,
-                IF (COUNT(rs.PJOK)=COUNT(s.sekolah_id), 1, 0) AS PJOK,
-                IF (COUNT(rs.MATEMATIKA)=COUNT(s.sekolah_id), 1, 0) AS MATEMATIKA,
-                COUNT(s.sekolah_id)*9 AS wajib_nilai,
+                CASE WHEN COUNT(rs.PABP) = COUNT(s.sekolah_id) THEN 1 ELSE 0 END AS PABP,
+                CASE WHEN COUNT(rs.PENDIDIKAN_PANCASILA) = COUNT(s.sekolah_id) THEN 1 ELSE 0 END AS PENDIDIKAN_PANCASILA,
+                CASE WHEN COUNT(rs.IPAS) = COUNT(s.sekolah_id) THEN 1 ELSE 0 END AS IPAS,
+                CASE WHEN COUNT(rs.BAHASA_JAWA) = COUNT(s.sekolah_id) THEN 1 ELSE 0 END AS BAHASA_JAWA,
+                CASE WHEN COUNT(rs.BAHASA_INDONESIA) = COUNT(s.sekolah_id) THEN 1 ELSE 0 END AS BAHASA_INDONESIA,
+                CASE WHEN COUNT(rs.SENI_BUDAYA) = COUNT(s.sekolah_id) THEN 1 ELSE 0 END AS SENI_BUDAYA,
+                CASE WHEN COUNT(rs.BAHASA_INGGRIS) = COUNT(s.sekolah_id) THEN 1 ELSE 0 END AS BAHASA_INGGRIS,
+                CASE WHEN COUNT(rs.PJOK) = COUNT(s.sekolah_id) THEN 1 ELSE 0 END AS PJOK,
+                CASE WHEN COUNT(rs.MATEMATIKA) = COUNT(s.sekolah_id) THEN 1 ELSE 0 END AS MATEMATIKA,
+                COUNT(s.sekolah_id) * 9 AS wajib_nilai,
                 SUM(rs.count_nilai) AS sudah_nilai,
                 AVG(avg_nilai) AS avg_nilai
             FROM
                 ranking_siswas rs
                 LEFT JOIN siswas s ON rs.sekolah_id = s.id
             GROUP BY
-                sekolah_id
+                rs.sekolah_id;
         ");
     }
 

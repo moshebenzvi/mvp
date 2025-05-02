@@ -182,3 +182,25 @@ export interface RangkingSekolahController {
     kecamatan_nama: string;
     gugus: number;
 }
+
+interface DashboardRangkingController {
+    sekolah_id: number
+    sekolah_nama: string
+    npsn: string
+    kecamatan_id: number
+    kecamatan_nama: string
+    gugus: number
+    jumlah_siswa: number
+    pabp: number
+    pendidikan_pancasila: number
+    ipas: number
+    bahasa_jawa: number
+    bahasa_indonesia: number
+    seni_budaya: number
+    bahasa_inggris: number
+    pjok: number
+    matematika: number
+    wajib_nilai: number
+    sudah_nilai: string
+    avg_nilai: string
+}
