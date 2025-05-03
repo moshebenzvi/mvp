@@ -27,6 +27,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::middleware(['role:Admin'])->group(function () {
         Route::get('sekolahs', [\App\Http\Controllers\SekolahController::class, 'index'])->name('sekolahs.index');
+        Route::post('sekolahs/import', [\App\Http\Controllers\SekolahController::class, 'import'])->name('sekolahs.import');
         Route::get('users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
         Route::resource('mapels', App\Http\Controllers\MapelController::class)->only(['index', 'update']);
         Route::get('siswas', [\App\Http\Controllers\SiswaController::class, 'index'])->name('siswas.index');

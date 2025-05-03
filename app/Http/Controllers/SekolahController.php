@@ -2,6 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\SekolahImport;
+use App\Models\Sekolah;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+
+
 class SekolahController extends Controller
 {
     public function index()
@@ -20,4 +26,17 @@ class SekolahController extends Controller
                 })
         ]);
     }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'dataSekolah' => 'required|mimes:csv,xls,xlsx'
+        ]);
+        $file = $request->file('dataSekolah');
+        $nama_file = rand().$file->getClientOriginalName();
+        $file->move('sekolahs',$nama_file);
+        Excel::import(new SekolahImport(), public_path('/sekolahs/'.$nama_file));
+        return redirect()->route('sekolahs.index');
+    }
+
 }

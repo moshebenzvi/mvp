@@ -1,7 +1,7 @@
 'use client';
 
-import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { rankItem } from '@tanstack/match-sorter-utils';
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -15,11 +15,11 @@ import {
     useReactTable,
     type FilterFn,
 } from '@tanstack/react-table';
-import { rankItem } from "@tanstack/match-sorter-utils"
-import { Search } from 'lucide-react';
 import * as React from 'react';
 import { DataTablePagination } from './data-table-pagination';
 import { DataTableSearch } from './data-table-search';
+import { Search } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 
 // Define the fuzzy filter function
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
@@ -38,10 +38,10 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
-    filterData: string;
+    title?: string;
 }
 
-export function DataTable<TData, TValue>({ columns, data, filterData }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({ columns, data, title }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
@@ -72,13 +72,17 @@ export function DataTable<TData, TValue>({ columns, data, filterData }: DataTabl
 
     return (
         <div>
-            <div className="flex items-center pb-4">
-                <DataTableSearch
-                    value={globalFilter ?? ''}
-                    onChange={(value) => setGlobalFilter(String(value))}
-                    placeholder="Cari..."
-                />
+            <div className="flex items-center justify-between pb-4">
+                <div>
+                    <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
+                </div>
+                <div className="flex items-center gap-2">
+                    <div className="relative w-64">
+                        <DataTableSearch value={globalFilter ?? ''} onChange={(value) => setGlobalFilter(String(value))} placeholder="Cari..." />
+                    </div>
+                </div>
             </div>
+
             <div className="rounded-md border">
                 <Table>
                     <TableHeader>

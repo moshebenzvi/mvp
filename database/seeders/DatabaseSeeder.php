@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
@@ -50,13 +51,41 @@ class DatabaseSeeder extends Seeder
 
         // \App\Models\UserProfile::factory(21)->create();
 
-        \App\Models\Gugus::factory(40)->create();
+        $guguses = [
+            1 => 4,
+            2 => 3,
+            3 => 4,
+            4 => 4,
+            5 => 3,
+            6 => 2,
+            7 => 2,
+            8 => 3,
+            9 => 2,
+            10 => 3,
+            11 => 3,
+            12 => 2,
+            13 => 3,
+            14 => 2,
+        ];
+        foreach ($guguses as $kecamatan_id => $gugus) {
+            for ($i = 1; $i <= $gugus; $i++) {
+                \App\Models\Gugus::factory()->create([
+                    'gugus' => $i,
+                    'kecamatan_id' => $kecamatan_id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+        }
 
-        \App\Models\Sekolah::factory(50)->create();
 
-        \App\Models\Siswa::factory(250)->create();
+//        \App\Models\Gugus::factory(40)->create();
 
-        \App\Models\Nilai::factory(250*5)->create(); // siswa * 9
+//        \App\Models\Sekolah::factory(50)->create();
+//
+//        \App\Models\Siswa::factory(250)->create();
+//
+//        \App\Models\Nilai::factory(250*5)->create(); // siswa * 9
 
         \App\Models\UserProfile::factory()->create([
             'user_id' => $korektor,
