@@ -9,7 +9,7 @@ class RankingSiswaController extends Controller
     public function index()
     {
         $rankings = \App\Models\RankingSiswa::with('siswa', 'sekolah', 'sekolah.guguses')
-            ->get()
+            ->get()->sortByDesc('id')
             ->map(function ($ranking) {
                 $ranking->siswa_nama = $ranking->siswa->nama;
                 $ranking->nisn = $ranking->siswa->nisn;

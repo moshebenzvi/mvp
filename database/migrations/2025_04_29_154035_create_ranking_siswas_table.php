@@ -30,6 +30,7 @@ return new class extends Migration {
             LEFT JOIN nilais n ON s.id = n.siswa_id
             LEFT JOIN mapels m ON n.mapel_id = m.id
             GROUP BY s.id, s.sekolah_id
+            ORDER BY avg_nilai DESC
         ");
     }
 

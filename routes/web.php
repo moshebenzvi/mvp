@@ -7,30 +7,9 @@ use Inertia\Inertia;
 //     return Inertia::render('welcome');
 // })->name('home');
 
-Route::get('/coba', function () {
-    return \App\Models\RankingSekolah::with('sekolah', 'sekolah.kecamatan', 'sekolah.guguses')
-    ->get()
-    ->map(function ($ranking) {
-        $ranking->sekolah_nama = $ranking->sekolah->nama;
-        $ranking->npsn = $ranking->sekolah->npsn;
-        $ranking->kecamatan_id = $ranking->sekolah->kecamatan_id;
-        $ranking->kecamatan_nama = $ranking->sekolah->kecamatan->nama;
-        $ranking->gugus = $ranking->sekolah->guguses->gugus;
-        unset($ranking->sekolah);
-        return $ranking;
-    });
-    // ->map(function ($ranking) {
-    //     $ranking->siswa_nama = $ranking->siswa->nama;
-    //     $ranking->nisn = $ranking->siswa->nisn;
-    //     $ranking->sekolah_nama = $ranking->sekolah->nama;
-    //     $ranking->npsn = $ranking->sekolah->npsn;
-    //     $ranking->kecamatan = $ranking->sekolah->kecamatan->nama;
-    //     $ranking->gugus = $ranking->sekolah->guguses->gugus;
-    //     unset($ranking->sekolah);
-    //     unset($ranking->siswa);
-    //     return $ranking;
-    // });
-});
+// Route::get('/coba', function () {
+//     return auth()->user()->load(['userProfile.kecamatan', 'userProfile.guguses.sekolahs']);
+// });
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', function () {
@@ -40,6 +19,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
+
+    Route::get('ranking/siswas', [\App\Http\Controllers\RankingSiswaController::class, 'index'])->name('ranking.siswas.index');
+    Route::get('ranking/sekolahs', [\App\Http\Controllers\RankingSekolahController::class, 'index'])->name('ranking.sekolahs.index');
+    Route::get('ranking/sekolahs/refresh', [\App\Http\Controllers\RankingSekolahController::class, 'refresh'])->name('ranking.sekolahs.refresh');
 
 
     Route::middleware(['role:Admin'])->group(function () {
@@ -55,9 +38,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('siswas/refresh', [\App\Http\Controllers\SiswaController::class, 'refresh'])->name('siswas.refresh');
     });
 
-    Route::get('ranking/siswas', [\App\Http\Controllers\RankingSiswaController::class, 'index'])->name('ranking.siswas.index');
-    Route::get('ranking/sekolahs', [\App\Http\Controllers\RankingSekolahController::class, 'index'])->name('ranking.sekolahs.index');
-    Route::get('ranking/sekolahs/refresh', [\App\Http\Controllers\RankingSekolahController::class, 'refresh'])->name('ranking.sekolahs.refresh');
 });
 
 require __DIR__ . '/settings.php';

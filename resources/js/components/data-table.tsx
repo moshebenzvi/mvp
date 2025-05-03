@@ -13,9 +13,27 @@ import {
     getPaginationRowModel,
     getSortedRowModel,
     useReactTable,
+    type FilterFn,
 } from '@tanstack/react-table';
+import { rankItem } from "@tanstack/match-sorter-utils"
+import { Search } from 'lucide-react';
 import * as React from 'react';
 import { DataTablePagination } from './data-table-pagination';
+import { DataTableSearch } from './data-table-search';
+
+// Define the fuzzy filter function
+const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
+    // Rank the item
+    const itemRank = rankItem(row.getValue(columnId), value);
+
+    // Store the ranking info
+    addMeta({
+        itemRank,
+    });
+
+    // Return if the item should be filtered in/out
+    return itemRank.passed;
+};
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -27,32 +45,38 @@ export function DataTable<TData, TValue>({ columns, data, filterData }: DataTabl
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
+    const [globalFilter, setGlobalFilter] = React.useState('');
 
     const table = useReactTable({
         data,
         columns,
+        filterFns: {
+            fuzzy: fuzzyFilter,
+        },
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
         onSortingChange: setSorting,
         getSortedRowModel: getSortedRowModel(),
         onColumnFiltersChange: setColumnFilters,
+        globalFilterFn: fuzzyFilter,
+        onGlobalFilterChange: setGlobalFilter,
         getFilteredRowModel: getFilteredRowModel(),
         onColumnVisibilityChange: setColumnVisibility,
         state: {
             sorting,
             columnFilters,
             columnVisibility,
+            globalFilter,
         },
     });
 
     return (
         <div>
             <div className="flex items-center pb-4">
-                <Input
-                    placeholder={`Filter ${filterData}...`}
-                    value={(table.getColumn(filterData)?.getFilterValue() as string) ?? ''}
-                    onChange={(event) => table.getColumn(filterData)?.setFilterValue(event.target.value)}
-                    className="max-w-sm"
+                <DataTableSearch
+                    value={globalFilter ?? ''}
+                    onChange={(value) => setGlobalFilter(String(value))}
+                    placeholder="Cari..."
                 />
             </div>
             <div className="rounded-md border">

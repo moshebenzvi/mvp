@@ -26,11 +26,6 @@ class Gugus extends Model
         return $this->belongsTo(Kecamatan::class);
     }
 
-    // public function sekolah(): HasMany
-    // {
-    //     return $this->hasMany(Sekolah::class);
-    // }
-
     public function userProfile(): HasMany
     {
         return $this->hasMany(UserProfile::class);

@@ -31,7 +31,9 @@ return new class extends Migration {
                 ranking_siswas rs
                 LEFT JOIN siswas s ON rs.sekolah_id = s.id
             GROUP BY
-                rs.sekolah_id;
+                rs.sekolah_id
+            ORDER BY
+                avg_nilai DESC
         ");
     }
 

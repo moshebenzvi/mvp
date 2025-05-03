@@ -56,7 +56,7 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\Siswa::factory(250)->create();
 
-        \App\Models\Nilai::factory(250*7)->create(); // siswa * 9
+        \App\Models\Nilai::factory(250*5)->create(); // siswa * 9
 
         \App\Models\UserProfile::factory()->create([
             'user_id' => $korektor,
