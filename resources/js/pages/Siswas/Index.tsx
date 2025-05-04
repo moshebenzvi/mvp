@@ -73,7 +73,7 @@ export default function Index({ siswas }: { siswas: SiswaController[] }) {
                                     type="file"
                                     name="dataSiswa"
                                     onChange={(e) => setData('dataSiswa', e.target.files?.[0] || null)}
-                                    placeholder="Upload Data Sekolah"
+                                    placeholder="Upload Data Siswa"
                                 />
 
                                 <InputError message={errors.dataSiswa} />
