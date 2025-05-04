@@ -33,10 +33,13 @@ class SekolahController extends Controller
             'dataSekolah' => 'required|mimes:csv,xls,xlsx'
         ]);
         $file = $request->file('dataSekolah');
-        $nama_file = rand().$file->getClientOriginalName();
-        $file->move('sekolahs',$nama_file);
-        Excel::import(new SekolahImport(), public_path('/sekolahs/'.$nama_file));
-        return redirect()->route('sekolahs.index');
+        $nama_file = rand(0, 100) . "_Data_Sekolah." . $file->getClientOriginalExtension();
+        $file->move('sekolahs', $nama_file);
+        \App\Models\Sekolah::truncate();
+        Excel::import(new SekolahImport(), public_path('/sekolahs/' . $nama_file));
+
+        // Add a flash message
+        return redirect()->route('sekolahs.index')->with('success', 'Data Sekolah berhasil diimport');
     }
 
 }

@@ -1,16 +1,15 @@
+import { DataTable } from '@/components/data-table';
+import InputError from '@/components/input-error';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/app-layout';
 import type { BreadcrumbItem, SekolahController } from '@/types';
-import { Head } from '@inertiajs/react';
-import { DataTable } from '@/components/data-table';
-import { columns } from './tableColumns';
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import InputError from '@/components/input-error';
+import { Head, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
-import { useForm } from '@inertiajs/react';
-
+import { columns } from './tableColumns';
+import React from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -24,10 +23,10 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Index({ sekolahs }: { sekolahs: SekolahController[] }) {
-
     const { data, setData, post, processing, reset, errors, clearErrors } = useForm<{ dataSekolah: File | null }>({
         dataSekolah: null,
     });
+	const [open, setOpen] = React.useState(false);
     const uploadSekolah: FormEventHandler = (e) => {
         e.preventDefault();
         if (!data.dataSekolah) {
@@ -36,7 +35,7 @@ export default function Index({ sekolahs }: { sekolahs: SekolahController[] }) {
         }
         post(route('sekolahs.import'), {
             preserveScroll: true,
-            onSuccess: () => closeModal(),
+            onSuccess: () => setOpen(false),
             onFinish: () => reset(),
             forceFormData: true,
         });
@@ -52,7 +51,7 @@ export default function Index({ sekolahs }: { sekolahs: SekolahController[] }) {
                 <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl md:min-h-min">
                     <DataTable columns={columns} data={sekolahs} title={'Data Sekolah'} />
                 </div>
-                <Dialog>
+                <Dialog open={open} onOpenChange={setOpen}>
                     <DialogTrigger asChild>
                         <Button>Upload Data Sekolah</Button>
                     </DialogTrigger>
@@ -60,6 +59,8 @@ export default function Index({ sekolahs }: { sekolahs: SekolahController[] }) {
                         <DialogTitle>Upload Data Sekolah</DialogTitle>
                         <DialogDescription>
                             Upload file XLSX.
+                            <br />
+                            Data sebelumnya akan dihapus.
                             <br />
                             Row: Nama Sekolah, NPSN, Gugus ID, Kecamatan ID.
                             <br />
