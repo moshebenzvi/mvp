@@ -34,6 +34,20 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password'),
         ])->assignRole('Korektor')->id;
 
+        $korektor = User::factory()->create([
+            'name' => 'Korektor User',
+            'email' => 'korektor@korektor.com',
+            'password' => bcrypt('password'),
+        ])->assignRole('Dinas')->id;
+
+        $korektor = User::factory()->create([
+            'name' => 'Korektor User',
+            'email' => 'korektor@korektor.com',
+            'password' => bcrypt('password'),
+        ])->assignRole('Operator')->id;
+
+
+
         $kecamatans = ['Panggul', 'Munjungan', 'Pule', 'Dongko', 'Tugu', 'Karangan', 'Kampak', 'Watulimo', 'Bendungan', 'Gandusari', 'Trenggalek', 'Pogalan', 'Durenan', 'Suruh'];
         foreach ($kecamatans as $kecamatan) {
             \App\Models\Kecamatan::factory()->create([

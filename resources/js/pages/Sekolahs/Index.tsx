@@ -58,7 +58,13 @@ export default function Index({ sekolahs }: { sekolahs: SekolahController[] }) {
                     </DialogTrigger>
                     <DialogContent>
                         <DialogTitle>Upload Data Sekolah</DialogTitle>
-                        <DialogDescription></DialogDescription>
+                        <DialogDescription>
+                            Upload file XLSX.
+                            <br />
+                            Row: Nama Sekolah, NPSN, Gugus ID, Kecamatan ID.
+                            <br />
+                            Column pertama berisi data, tanpa ada judul atau header.
+                        </DialogDescription>
                         <form className="space-y-6" onSubmit={uploadSekolah}>
                             <div className="grid gap-2">
                                 <Label htmlFor="dataSekolah" className="sr-only">
