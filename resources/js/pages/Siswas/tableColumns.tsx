@@ -50,7 +50,7 @@ export const columns: ColumnDef<SiswaController>[] = [
                             </Button>
                         </TooltipTrigger>
                         <TooltipContent>
-                            <p>Edit Data Siswa</p>
+                            <p>Edit Data Siswa {row.getValue('id')}</p>
                         </TooltipContent>
                     </Tooltip>
                 </TooltipProvider>
