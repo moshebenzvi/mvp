@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\SiswaImport;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class SiswaController extends Controller
 {
@@ -42,5 +45,20 @@ class SiswaController extends Controller
         }
 
         return response()->json($school->siswas);
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'dataSiswa' => 'required|mimes:csv,xls,xlsx'
+        ]);
+        $file = $request->file('dataSiswa');
+        $nama_file = rand(0, 100) . "_Data_Sekolah." . $file->getClientOriginalExtension();
+        $file->move('siswas', $nama_file);
+        Excel::import(new SiswaImport(), public_path('/siswas/' . $nama_file));
+        // Delete the file after import
+        unlink(public_path('/siswas/' . $nama_file));
+        // Add a flash message
+        return redirect()->route('siswas.index')->with('success', 'Data Siswa berhasil diimport');
     }
 }

@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/app-layout';
 import type { BreadcrumbItem, SiswaController } from '@/types';
 import { Head, useForm } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
+import React, { FormEventHandler } from 'react';
 import { columns } from './tableColumns';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -25,6 +25,8 @@ export default function Index({ siswas }: { siswas: SiswaController[] }) {
     const { data, setData, post, processing, reset, errors, clearErrors } = useForm<{ dataSiswa: File | null }>({
         dataSiswa: null,
     });
+    
+    const [open, setOpen] = React.useState(false);
     const uploadSiswa: FormEventHandler = (e) => {
         e.preventDefault();
         if (!data.dataSiswa) {
@@ -49,7 +51,7 @@ export default function Index({ siswas }: { siswas: SiswaController[] }) {
                 <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl md:min-h-min">
                     <DataTable columns={columns} data={siswas} title={'Data Siswa'} />
                 </div>
-                <Dialog>
+                <Dialog open={open} onOpenChange={setOpen}>
                     <DialogTrigger asChild>
                         <Button>Upload Data Siswa</Button>
                     </DialogTrigger>

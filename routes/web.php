@@ -31,6 +31,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
         Route::resource('mapels', App\Http\Controllers\MapelController::class)->only(['index', 'update']);
         Route::get('siswas', [\App\Http\Controllers\SiswaController::class, 'index'])->name('siswas.index');
+        Route::post('siswas/import', [\App\Http\Controllers\SiswaController::class, 'import'])->name('siswas.import');
+
     });
 
     Route::middleware(['role:Korektor'])->group(function () {
