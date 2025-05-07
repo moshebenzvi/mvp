@@ -34,13 +34,13 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password'),
         ])->assignRole('Korektor')->id;
 
-        $korektor = User::factory()->create([
+        $dinas = User::factory()->create([
             'name' => 'Dinas User',
             'email' => 'dinas@dinas.com',
             'password' => bcrypt('password'),
         ])->assignRole('Dinas')->id;
 
-        $korektor = User::factory()->create([
+        $operator = User::factory()->create([
             'name' => 'Operator User',
             'email' => 'operator@operator.com',
             'password' => bcrypt('password'),

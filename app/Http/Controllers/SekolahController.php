@@ -35,7 +35,7 @@ class SekolahController extends Controller
         $file = $request->file('dataSekolah');
         $nama_file = rand(0, 100) . "_Data_Sekolah." . $file->getClientOriginalExtension();
         $file->move('sekolahs', $nama_file);
-        \App\Models\Sekolah::truncate();
+        // \App\Models\Sekolah::truncate();
         Excel::import(new SekolahImport(), public_path('/sekolahs/' . $nama_file));
 
         // Add a flash message

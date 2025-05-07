@@ -22,6 +22,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Index({ korektor, mapels }: { korektor: User; mapels: Mapel[] }) {
+    console.log('Korektor:', korektor);
     const [selectedSekolah, setSelectedSekolah] = useState<string>('');
     const [selectedMapel, setSelectedMapel] = useState<string>('');
     const [displayedStudents, setDisplayedStudents] = useState<Siswa[]>([]);
