@@ -1,15 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 // Route::get('/', function () {
 //     return Inertia::render('welcome');
 // })->name('home');
 
-// Route::get('/coba', function () {
-//     return auth()->user()->load(['userProfile.kecamatan', 'userProfile.guguses.sekolahs']);
-// });
+Route::get('/coba', function () {
+    return Storage::download('logo_login.png');
+});
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', function () {

@@ -1,18 +1,31 @@
 'use client';
 
 import AppLayout from '@/layouts/app-layout';
-import type { BreadcrumbItem, Mapel, Sekolah, Siswa, User } from '@/types';
+import type { BreadcrumbItem, Mapel, Sekolah, SharedData, Siswa, User } from '@/types';
 import { Head, router } from '@inertiajs/react';
 import axios from 'axios';
-
-import type React from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { usePage } from '@inertiajs/react';
+import { AlertCircle } from 'lucide-react';
+import type React from 'react';
 import { useEffect, useState } from 'react';
+
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -22,7 +35,8 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Index({ korektor, mapels }: { korektor: User; mapels: Mapel[] }) {
-    console.log('Korektor:', korektor);
+    // console.log('Korektor:', korektor);
+    const { auth } = usePage<SharedData>().props;
     const [selectedSekolah, setSelectedSekolah] = useState<string>('');
     const [selectedMapel, setSelectedMapel] = useState<string>('');
     const [displayedStudents, setDisplayedStudents] = useState<Siswa[]>([]);
@@ -236,14 +250,14 @@ export default function Index({ korektor, mapels }: { korektor: User; mapels: Ma
                                         {isLoading && (
                                             <TableRow>
                                                 <TableCell colSpan={4} className="py-4 text-center">
-                                                    Loading student data...
+                                                    Loading...
                                                 </TableCell>
                                             </TableRow>
                                         )}
                                         {!isLoading && displayedStudents.length === 0 && (
                                             <TableRow>
                                                 <TableCell colSpan={4} className="py-4 text-center">
-                                                    No students found for the selected school and subject.
+                                                    Siswa tidak ditemukan.
                                                 </TableCell>
                                             </TableRow>
                                         )}
@@ -255,15 +269,67 @@ export default function Index({ korektor, mapels }: { korektor: User; mapels: Ma
                         {/* Submit Button - Only show if students are loaded AND there are ungraded students */}
                         {displayedStudents.length > 0 && hasUngraded && (
                             <div className="mt-4 flex justify-end">
-                                <Button type="submit" disabled={isSubmitting}>
+                                <AlertDialog>
+                                    <AlertDialogTrigger asChild>
+                                        <Button>Submit</Button>
+                                    </AlertDialogTrigger>
+                                    <AlertDialogContent>
+                                        <AlertDialogHeader>
+                                            <AlertDialogTitle>
+                                                <div className="mx-auto mb-2 flex h-16 w-16 items-center justify-center rounded-full bg-orange-500">
+                                                    <AlertCircle className="h-8 w-8 text-white" />
+                                                </div>
+                                            </AlertDialogTitle>
+                                            <AlertDialogDescription>
+                                                Dengan ini saya selaku operator <span className="text-blue-500">{auth.user.name}</span> <br />
+                                                menyatakan bahwa nilai siswa yang saya masukkan untuk <br />
+                                                <div className="grid grid-cols-[100px_1fr]">
+                                                    <span>Sekolah</span>
+                                                    <span>
+                                                        : {sekolahs.find((sekolah) => sekolah.id.toString() === selectedSekolah)?.nama || 'N/A'}
+                                                    </span>
+                                                    <span>Mata Pelajaran</span>
+                                                    <span>
+                                                        :{' '}
+                                                        <span className="text-blue-500">
+                                                            {mapels.find((mapel) => mapel.id.toString() === selectedMapel)?.nama || 'N/A'}
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                                adalah benar dan dapat dipertanggungjawabkan. <br />
+                                                <br />
+                                                <br />
+                                                *Setelah klik submit anda tidak diperkenankan untuk mengubah data nilai siswa. Tutup jendela untuk
+                                                memeriksa kembali data nilai.
+                                            </AlertDialogDescription>
+                                        </AlertDialogHeader>
+                                        <AlertDialogFooter>
+                                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                            <AlertDialogAction asChild>
+                                                <Button
+                                                    type="submit"
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        handleSubmit(e);
+                                                    }}
+                                                    disabled={isSubmitting}
+                                                >
+                                                    {isSubmitting ? 'Submitting...' : 'Submit'}
+                                                </Button>
+                                            </AlertDialogAction>
+                                        </AlertDialogFooter>
+                                    </AlertDialogContent>
+                                </AlertDialog>
+
+                                {/* <Button type="submit" disabled={isSubmitting}>
                                     {isSubmitting ? 'Submitting...' : 'Submit'}
-                                </Button>
+                                </Button> */}
                             </div>
                         )}
 
                         {/* Message when all students are already graded */}
                         {displayedStudents.length > 0 && !hasUngraded && (
-                            <div className="mt-4 text-center text-gray-500">All students already have grades for this subject.</div>
+                            <div className="mt-4 text-center text-gray-500">Semua siswa sudah diberikan nilai untuk mata pelajaran ini.</div>
                         )}
                     </form>
                 </div>

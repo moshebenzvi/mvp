@@ -1,7 +1,8 @@
 import DashboardPage from '@/components/dashboard-page';
 import AppLayout from '@/layouts/app-layout';
-import { type BreadcrumbItem, DashboardRangkingController } from '@/types';
+import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
+
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Dashboard',
@@ -9,7 +10,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Dashboard({ ranking }: { ranking: DashboardRangkingController[] }) {
+export default function Dashboard() {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />

@@ -25,7 +25,7 @@ export default function Index({ siswas }: { siswas: SiswaController[] }) {
     const { data, setData, post, processing, reset, errors, clearErrors } = useForm<{ dataSiswa: File | null }>({
         dataSiswa: null,
     });
-    
+
     const [open, setOpen] = React.useState(false);
     const uploadSiswa: FormEventHandler = (e) => {
         e.preventDefault();
@@ -66,7 +66,7 @@ export default function Index({ siswas }: { siswas: SiswaController[] }) {
                         </DialogDescription>
                         <form className="space-y-6" onSubmit={uploadSiswa}>
                             <div className="grid gap-2">
-                                <Label htmlFor="dataSekolah" className="sr-only">
+                                <Label htmlFor="dataSiswa" className="sr-only">
                                     Upload Data Siswa
                                 </Label>
 

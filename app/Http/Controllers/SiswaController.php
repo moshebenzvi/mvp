@@ -53,7 +53,7 @@ class SiswaController extends Controller
             'dataSiswa' => 'required|mimes:csv,xls,xlsx'
         ]);
         $file = $request->file('dataSiswa');
-        $nama_file = rand(0, 100) . "_Data_Sekolah." . $file->getClientOriginalExtension();
+        $nama_file = rand(0, 100) . "_Data_Siswa." . $file->getClientOriginalExtension();
         $file->move('siswas', $nama_file);
         Excel::import(new SiswaImport(), public_path('/siswas/' . $nama_file));
         // Delete the file after import

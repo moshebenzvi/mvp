@@ -1,9 +1,6 @@
 import { DataTableColumnHeader } from '@/components/data-table-column-header';
-import { Button } from '@/components/ui/button';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import type { SiswaController } from '@/types';
 import { ColumnDef } from '@tanstack/react-table';
-import { Cog } from 'lucide-react';
 
 export const columns: ColumnDef<SiswaController>[] = [
     {
@@ -37,24 +34,24 @@ export const columns: ColumnDef<SiswaController>[] = [
         accessorKey: 'nama_kecamatan',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Kecamatan" />,
     },
-    {
-        accessorKey: 'id',
-        header: () => <></>,
-        cell: ({ row }) => {
-            return (
-                <TooltipProvider>
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                            <Button variant="ghost">
-                                <Cog />
-                            </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                            <p>Edit Data Siswa {row.getValue('id')}</p>
-                        </TooltipContent>
-                    </Tooltip>
-                </TooltipProvider>
-            );
-        },
-    },
+    // {
+    //     accessorKey: 'id',
+    //     header: () => <></>,
+    //     cell: ({ row }) => {
+    //         return (
+    //             <TooltipProvider>
+    //                 <Tooltip>
+    //                     <TooltipTrigger asChild>
+    //                         <Button variant="ghost">
+    //                             <Cog />
+    //                         </Button>
+    //                     </TooltipTrigger>
+    //                     <TooltipContent>
+    //                         <p>Edit Data Siswa {row.getValue('id')}</p>
+    //                     </TooltipContent>
+    //                 </Tooltip>
+    //             </TooltipProvider>
+    //         );
+    //     },
+    // },
 ];

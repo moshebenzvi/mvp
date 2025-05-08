@@ -17,7 +17,8 @@ import axios from 'axios';
 const { data: schoolData }: { data: DashboardRangkingController[] } = await axios.get(`ranking/sekolahs/refresh`);
 
 export default function DashboardPage() {
-    const [activeTab, setActiveTab] = useState('overview');
+    // console.log(schoolData);
+    // const [activeTab, setActiveTab] = useState('overview');
     const [searchTerm, setSearchTerm] = useState('');
     const [kecamatanFilter, setKecamatanFilter] = useState<string>('all');
     const [gugusFilter, setGugusFilter] = useState<string>('all');
@@ -72,72 +73,72 @@ export default function DashboardPage() {
             totalSchools,
             totalStudents,
             totalKecamatans,
-            avgScore: avgScore.toFixed(2),
-            completionRate: completionRate.toFixed(2),
+            avgScore: isNaN(avgScore) ? 0 : avgScore.toFixed(2),
+            completionRate: isNaN(completionRate) ? 0 : completionRate.toFixed(2),
         };
     }, []);
 
     // Calculate subject completion rates
-    const subjectCompletionRates = useMemo(() => {
-        const subjects = [
-            { id: 'pabp', name: 'PABP' },
-            { id: 'pendidikan_pancasila', name: 'PENDIDIKAN PANCASILA' },
-            { id: 'ipas', name: 'IPAS' },
-            { id: 'bahasa_jawa', name: 'BAHASA JAWA' },
-            { id: 'bahasa_indonesia', name: 'BAHASA INDONESIA' },
-            { id: 'seni_budaya', name: 'SENI BUDAYA' },
-            { id: 'bahasa_inggris', name: 'BAHASA INGGRIS' },
-            { id: 'pjok', name: 'PJOK' },
-            { id: 'matematika', name: 'MATEMATIKA' },
-        ];
+    // const subjectCompletionRates = useMemo(() => {
+    //     const subjects = [
+    //         { id: 'pabp', name: 'PABP' },
+    //         { id: 'pendidikan_pancasila', name: 'PENDIDIKAN PANCASILA' },
+    //         { id: 'ipas', name: 'IPAS' },
+    //         { id: 'bahasa_jawa', name: 'BAHASA JAWA' },
+    //         { id: 'bahasa_indonesia', name: 'BAHASA INDONESIA' },
+    //         { id: 'seni_budaya', name: 'SENI BUDAYA' },
+    //         { id: 'bahasa_inggris', name: 'BAHASA INGGRIS' },
+    //         { id: 'pjok', name: 'PJOK' },
+    //         { id: 'matematika', name: 'MATEMATIKA' },
+    //     ];
 
-        return subjects
-            .map((subject) => {
-                const completedCount = schoolData.reduce(
-                    (sum, school) => sum + (Number(school[subject.id as keyof DashboardRangkingController]) || 0),
-                    0,
-                );
-                const completionRate = (completedCount / schoolData.length) * 100;
+    //     return subjects
+    //         .map((subject) => {
+    //             const completedCount = schoolData.reduce(
+    //                 (sum, school) => sum + (Number(school[subject.id as keyof DashboardRangkingController]) || 0),
+    //                 0,
+    //             );
+    //             const completionRate = (completedCount / schoolData.length) * 100;
 
-                return {
-                    ...subject,
-                    completionRate: completionRate.toFixed(2),
-                    completedCount,
-                };
-            })
-            .sort((a, b) => Number.parseFloat(b.completionRate) - Number.parseFloat(a.completionRate));
-    }, []);
+    //             return {
+    //                 ...subject,
+    //                 completionRate: completionRate.toFixed(2),
+    //                 completedCount,
+    //             };
+    //         })
+    //         .sort((a, b) => Number.parseFloat(b.completionRate) - Number.parseFloat(a.completionRate));
+    // }, []);
 
     // Calculate district performance
-    const districtPerformance = useMemo(() => {
-        const districtMap = new Map<string, { schools: number; avgScore: number; completionRate: number }>();
+    // const districtPerformance = useMemo(() => {
+    //     const districtMap = new Map<string, { schools: number; avgScore: number; completionRate: number }>();
 
-        schoolData.forEach((school) => {
-            const district = school.kecamatan_nama;
-            const currentData = districtMap.get(district) || { schools: 0, avgScore: 0, completionRate: 0 };
+    //     schoolData.forEach((school) => {
+    //         const district = school.kecamatan_nama;
+    //         const currentData = districtMap.get(district) || { schools: 0, avgScore: 0, completionRate: 0 };
 
-            const newSchoolCount = currentData.schools + 1;
-            const newAvgScore = (currentData.avgScore * currentData.schools + Number.parseFloat(school.avg_nilai)) / newSchoolCount;
-            const newCompletionRate =
-                (currentData.completionRate * currentData.schools + (Number.parseInt(school.sudah_nilai) / school.wajib_nilai) * 100) /
-                newSchoolCount;
+    //         const newSchoolCount = currentData.schools + 1;
+    //         const newAvgScore = (currentData.avgScore * currentData.schools + Number.parseFloat(school.avg_nilai)) / newSchoolCount;
+    //         const newCompletionRate =
+    //             (currentData.completionRate * currentData.schools + (Number.parseInt(school.sudah_nilai) / school.wajib_nilai) * 100) /
+    //             newSchoolCount;
 
-            districtMap.set(district, {
-                schools: newSchoolCount,
-                avgScore: newAvgScore,
-                completionRate: newCompletionRate,
-            });
-        });
+    //         districtMap.set(district, {
+    //             schools: newSchoolCount,
+    //             avgScore: newAvgScore,
+    //             completionRate: newCompletionRate,
+    //         });
+    //     });
 
-        return Array.from(districtMap.entries())
-            .map(([district, data]) => ({
-                district,
-                schools: data.schools,
-                avgScore: data.avgScore.toFixed(2),
-                completionRate: data.completionRate.toFixed(2),
-            }))
-            .sort((a, b) => Number.parseFloat(b.avgScore) - Number.parseFloat(a.avgScore));
-    }, []);
+    //     return Array.from(districtMap.entries())
+    //         .map(([district, data]) => ({
+    //             district,
+    //             schools: data.schools,
+    //             avgScore: data.avgScore.toFixed(2),
+    //             completionRate: data.completionRate.toFixed(2),
+    //         }))
+    //         .sort((a, b) => Number.parseFloat(b.avgScore) - Number.parseFloat(a.avgScore));
+    // }, []);
 
     // Pagination component
     const Pagination = () => {
@@ -269,7 +270,7 @@ export default function DashboardPage() {
                             </CardHeader>
                             <CardContent>
                                 <div className="text-2xl font-bold">{summaryStats.completionRate}%</div>
-                                <Progress value={Number.parseFloat(summaryStats.completionRate)} className="mt-2" />
+                                <Progress value={Number.parseFloat(summaryStats.completionRate.toString())} className="mt-2" />
                             </CardContent>
                         </Card>
                     </div>
