@@ -34,8 +34,8 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Index({ korektor, mapels }: { korektor: User; mapels: Mapel[] }) {
-    // console.log('Korektor:', korektor);
+export default function Index({ korektor, mapels, sekolah }: { korektor: User; mapels: Mapel[]; sekolah: Sekolah[] }) {
+    console.log(sekolah);
     const { auth } = usePage<SharedData>().props;
     const [selectedSekolah, setSelectedSekolah] = useState<string>('');
     const [selectedMapel, setSelectedMapel] = useState<string>('');
@@ -52,7 +52,7 @@ export default function Index({ korektor, mapels }: { korektor: User; mapels: Ma
     // Initialize schools from user data
     useEffect(() => {
         if (korektor && korektor.user_profile && korektor.user_profile.guguses) {
-            setSekolahs(korektor.user_profile.guguses.sekolahs || []);
+            setSekolahs(sekolah || []);
         }
     }, [korektor]);
 

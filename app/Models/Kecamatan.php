@@ -20,7 +20,7 @@ class Kecamatan extends Model
         'updated_at',
     ];
 
-    public function userProfile(): HasMany
+    /*public function userProfile(): HasMany
     {
         return $this->hasMany(UserProfile::class);
     }
@@ -33,5 +33,5 @@ class Kecamatan extends Model
     public function sekolahs(): HasMany
     {
         return $this->hasMany(Sekolah::class);
-    }
+    }*/
 }

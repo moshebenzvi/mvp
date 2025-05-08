@@ -35,4 +35,5 @@ class Gugus extends Model
     {
         return $this->hasMany(Sekolah::class, 'guguses_id');
     }
+
 }

@@ -47,6 +47,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';
 
+//todo: refactor gugus lebih tinggi dripada kecamatan karena ada tabel gugus
 //todo: sekolah: download data sekolah
 //todo: siswa: unduh dan upload siswa, edit nilai siswa
 //todo: log activity

@@ -18,8 +18,6 @@ import {
 import * as React from 'react';
 import { DataTablePagination } from './data-table-pagination';
 import { DataTableSearch } from './data-table-search';
-import { Search } from 'lucide-react';
-import { Input } from '@/components/ui/input';
 
 // Define the fuzzy filter function
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {

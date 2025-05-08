@@ -15,10 +15,10 @@ class SiswaImport implements ToModel
     public function model(array $row)
     {
         return new Siswa([
-            "nama" => $row[0],
-            "kelamin" => $row[1],
-            "nisn" => $row[2],
-            // "sekolah_id" => $row[3],
+            'nama' => $row[0],
+            'kelamin' => $row[1],
+            'nisn' => $row[2],
+            'sekolah_id' => \App\Models\Sekolah::where('npsn', '=', $row[3])->first()?->id ?? 0,
         ]);
     }
 }

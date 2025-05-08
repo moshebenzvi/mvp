@@ -44,8 +44,4 @@ class Sekolah extends Model
     {
         return $this->hasMany(RankingSiswa::class, 'sekolah_id');
     }
-    public function scopeFindByNpsn($query, $npsn)
-    {
-        return $query->where('npsn', $npsn)->value('id');
-    }
 }
