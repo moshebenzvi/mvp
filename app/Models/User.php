@@ -19,6 +19,7 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
+        'gugus_id',
         'name',
         'email',
         'password',
@@ -55,8 +56,8 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function userProfile()
+    public function gugus()
     {
-        return $this->hasOne(UserProfile::class);
+        return $this->hasOne(Gugus::class, 'id', 'gugus_id')->withDefault();
     }
 }

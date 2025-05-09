@@ -13,17 +13,17 @@ class SiswaController extends Controller
     public function index()
     {
         return inertia('Siswas/Index', [
-            'siswas' => \App\Models\Siswa::with('sekolah')
-                ->get()
+            'siswas' => \App\Models\Siswa::with('sekolah.gugus.kecamatan')->get()
                 ->map(function ($siswa) {
-                    $siswa->nama_sekolah = $siswa->sekolah->nama;
-                    $siswa->npsn_sekolah = $siswa->sekolah->npsn;
-                    $siswa->nama_kecamatan = $siswa->sekolah->kecamatan->nama;
-                    unset($siswa->sekolah);
-                    unset($siswa->sekolah_id);
-                    unset($siswa->kecamatan);
-                    unset($siswa->kecamatan_id);
-                    return $siswa;
+                    return [
+                        'id' => $siswa->id,
+                        'nama' => $siswa->nama,
+                        'kelamin' => $siswa->kelamin,
+                        'nisn' => $siswa->nisn,
+                        'sekolah' => $siswa->sekolah->nama,
+                        'npsn' => $siswa->sekolah->npsn,
+                        'kecamatan' => $siswa->sekolah->gugus->kecamatan->nama,
+                    ];
                 })
         ]);
     }
@@ -45,21 +45,5 @@ class SiswaController extends Controller
         }
 
         return response()->json($school->siswas);
-    }
-
-    public function import(Request $request)
-    {
-        $request->validate([
-            'dataSiswa' => 'required|mimes:csv,xls,xlsx'
-        ]);
-        $file = $request->file('dataSiswa');
-        $nama_file = rand(0, 100) . '_Data_Siswa.' . $file->getClientOriginalExtension();
-        $file->move('siswas', $nama_file);
-        $file_path = public_path("siswas/{$nama_file}");
-        Excel::import(new SiswaImport(), $file_path);
-        // Delete the file after import
-        unlink(public_path('/siswas/' . $nama_file));
-        // Add a flash message
-        return redirect()->route('siswas.index')->with('success', 'Data Siswa berhasil diimport');
     }
 }

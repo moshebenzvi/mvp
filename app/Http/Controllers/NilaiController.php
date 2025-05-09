@@ -8,15 +8,14 @@ class NilaiController extends Controller
 {
     public function index()
     {
-        $korektor = auth()->user()->unsetRelation('roles')->load('userProfile.kecamatan', 'userProfile.guguses');
-        return $sekolahs = \App\Models\Sekolah::where('guguses_id', $korektor->userProfile->guguses_id)
-            ->toRawSql();
+        $korektor = auth()->user()->unsetRelation('roles')->load('gugus.kecamatan');
+        $sekolah = \App\Models\Sekolah::where('gugus_id', $korektor->gugus_id)->get();
         $mapel = \App\Models\Mapel::active()->get();
 
         return inertia('Nilais/Index', [
             'korektor' => $korektor,
             'mapels' => $mapel,
-            'sekolahs' => $sekolahs,
+            'sekolah' => $sekolah,
         ]);
     }
 

@@ -22,15 +22,10 @@ class Sekolah extends Model
         'updated_at',
     ];
 
-    public function guguses()
+    public function gugus()
     {
-        return $this->belongsTo(Gugus::class);
+        return $this->belongsTo(Gugus::class, 'gugus_id', 'id')->withDefault();
     }
-    public function kecamatan()
-    {
-        return $this->belongsTo(Kecamatan::class);
-    }
-
     public function siswas()
     {
         return $this->hasMany(Siswa::class);

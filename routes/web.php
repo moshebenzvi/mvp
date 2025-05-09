@@ -9,7 +9,13 @@ use Inertia\Inertia;
 // })->name('home');
 
 Route::get('/coba', function () {
-    return Storage::download('logo_login.png');
+    $mapelId = 1; // Ganti dengan ID mapel yang sesuai
+    return \App\Models\Sekolah::with([
+        'siswas.nilais' => function ($query) use ($mapelId) {
+            $query->where('mapel_id', $mapelId);
+        }
+    ])->find(1);
+    ;
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {

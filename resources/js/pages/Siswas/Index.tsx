@@ -1,9 +1,4 @@
 import { DataTable } from '@/components/data-table';
-import InputError from '@/components/input-error';
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/app-layout';
 import type { BreadcrumbItem, SiswaController } from '@/types';
 import { Head, useForm } from '@inertiajs/react';
@@ -51,6 +46,7 @@ export default function Index({ siswas }: { siswas: SiswaController[] }) {
                 <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl md:min-h-min">
                     <DataTable columns={columns} data={siswas} title={'Data Siswa'} />
                 </div>
+                {/*  
                 <Dialog open={open} onOpenChange={setOpen}>
                     <DialogTrigger asChild>
                         <Button>Upload Data Siswa</Button>
@@ -95,6 +91,7 @@ export default function Index({ siswas }: { siswas: SiswaController[] }) {
                         </form>
                     </DialogContent>
                 </Dialog>
+                */}
             </div>
         </AppLayout>
     );

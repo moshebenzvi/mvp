@@ -51,6 +51,8 @@ export default function Index({ sekolahs }: { sekolahs: SekolahController[] }) {
                 <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl md:min-h-min">
                     <DataTable columns={columns} data={sekolahs} title={'Data Sekolah'} />
                 </div>
+
+                {/* 
                 <Dialog open={open} onOpenChange={setOpen}>
                     <DialogTrigger asChild>
                         <Button>Upload Data Sekolah</Button>
@@ -96,7 +98,8 @@ export default function Index({ sekolahs }: { sekolahs: SekolahController[] }) {
                             </DialogFooter>
                         </form>
                     </DialogContent>
-                </Dialog>
+                </Dialog> 
+                */}
             </div>
         </AppLayout>
     );

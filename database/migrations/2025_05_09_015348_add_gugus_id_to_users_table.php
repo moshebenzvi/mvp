@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('guguses', function (Blueprint $table) {
-            $table->id();
-            $table->integer('gugus');
-            $table->foreignId('kecamatan_id')->constrained()->cascadeOnDelete();
-            $table->unique(['gugus', 'kecamatan_id']);
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignId('gugus_id')->nullable()->constrained('gugus', 'id')->cascadeOnDelete()->after('id');
+
         });
     }
 
@@ -25,6 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('guguses');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('gugus_id');
+
+        });
     }
 };

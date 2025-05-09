@@ -19,7 +19,7 @@ export const columns: ColumnDef<SekolahController>[] = [
         header: ({ column }) => <DataTableColumnHeader column={column} title="NPSN" />,
     },
     {
-        accessorKey: 'nama_kecamatan',
+        accessorKey: 'kecamatan',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Kecamatan" />,
     },
     {

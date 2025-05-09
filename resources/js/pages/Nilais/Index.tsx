@@ -35,26 +35,25 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Index({ korektor, mapels, sekolah }: { korektor: User; mapels: Mapel[]; sekolah: Sekolah[] }) {
-    console.log(sekolah);
     const { auth } = usePage<SharedData>().props;
     const [selectedSekolah, setSelectedSekolah] = useState<string>('');
     const [selectedMapel, setSelectedMapel] = useState<string>('');
     const [displayedStudents, setDisplayedStudents] = useState<Siswa[]>([]);
-    const [sekolahs, setSekolahs] = useState<Sekolah[]>([]);
+    // const [sekolahs, setSekolahs] = useState<Sekolah[]>([]);
     const [hasUngraded, setHasUngraded] = useState<boolean>(false);
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     // Extract kecamatan and gugus from user data
-    const kecamatanNama = korektor.user_profile.kecamatan.nama;
-    const gugusValue = korektor.user_profile.guguses.gugus;
+    const kecamatanNama = korektor.gugus.kecamatan.nama;
+    const gugusValue = korektor.gugus.gugus;
 
     // Initialize schools from user data
-    useEffect(() => {
-        if (korektor && korektor.user_profile && korektor.user_profile.guguses) {
-            setSekolahs(sekolah || []);
-        }
-    }, [korektor]);
+    // useEffect(() => {
+    //     if (korektor && korektor.user_profile && korektor.user_profile.guguses) {
+    //         setSekolahs(sekolah || []);
+    //     }
+    // }, [korektor]);
 
     // Fetch students data for the selected school and mapel
     const fetchStudentsData = async () => {
@@ -198,7 +197,7 @@ export default function Index({ korektor, mapels, sekolah }: { korektor: User; m
                                         <SelectValue placeholder="Pilih Sekolah" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        {sekolahs.map((sekolah) => (
+                                        {sekolah.map((sekolah) => (
                                             <SelectItem key={sekolah.id} value={sekolah.id.toString()}>
                                                 {sekolah.nama}
                                             </SelectItem>
@@ -286,7 +285,7 @@ export default function Index({ korektor, mapels, sekolah }: { korektor: User; m
                                                 <div className="grid grid-cols-[100px_1fr]">
                                                     <span>Sekolah</span>
                                                     <span>
-                                                        : {sekolahs.find((sekolah) => sekolah.id.toString() === selectedSekolah)?.nama || 'N/A'}
+                                                        : {sekolah.find((sekolah) => sekolah.id.toString() === selectedSekolah)?.nama || 'N/A'}
                                                     </span>
                                                     <span>Mata Pelajaran</span>
                                                     <span>

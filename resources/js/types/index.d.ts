@@ -37,7 +37,16 @@ export interface SharedData {
 */
 
 export interface Role {
+    id: number;
     name: string;
+    guard_name: string;
+    created_at: string;
+    updated_at: string;
+    pivot: {
+        model_type: string;
+        model_id: number;
+        role_id: number;
+    };
 }
 
 export interface Kecamatan {
@@ -45,10 +54,11 @@ export interface Kecamatan {
     nama: string;
 }
 
-export interface Guguses {
-    id: number;
-    gugus: number;
-    kecamatan_id: number;
+export interface Gugus {
+    id: number | null;
+    gugus?: number;
+    kecamatan_id?: number;
+    kecamatan?: Kecamatan;
     sekolahs?: Sekolah[];
 }
 
@@ -86,40 +96,22 @@ export interface Mapel {
     active: number;
 }
 
-export interface UserProfile {
-    id: number;
-    user_id: number;
-    guguses_id: number;
-    kecamatan_id: number;
-    kecamatan: Kecamatan;
-    guguses: Guguses;
-}
-
 export interface User {
     id: number;
     name: string;
     email: string;
     avatar?: string;
     email_verified_at: string | null;
-    roles: string;
-    created_at: string;
-    updated_at: string;
-    user_profile: UserProfile;
+    created_at?: string;
+    updated_at?: string;
+    role?: string;
+    kecamatan?: string;
+    gugus?: string | number;
     [key: string]: unknown; // This allows for additional properties...
 }
 /*
     Controller
 */
-
-export interface UserController {
-    id: number;
-    name: string;
-    email: string;
-    kecamatan: string;
-    gugus: string;
-    role: string;
-    // [key: string]: unknown; // This allows for additional properties...
-}
 
 export interface SekolahController {
     id: number;
@@ -184,23 +176,23 @@ export interface RangkingSekolahController {
 }
 
 interface DashboardRangkingController {
-    sekolah_id: number
-    sekolah_nama: string
-    npsn: string
-    kecamatan_id: number
-    kecamatan_nama: string
-    gugus: number
-    jumlah_siswa: number
-    pabp: number
-    pendidikan_pancasila: number
-    ipas: number
-    bahasa_jawa: number
-    bahasa_indonesia: number
-    seni_budaya: number
-    bahasa_inggris: number
-    pjok: number
-    matematika: number
-    wajib_nilai: number
-    sudah_nilai: string
-    avg_nilai: string
+    sekolah_id: number;
+    sekolah_nama: string;
+    npsn: string;
+    kecamatan_id: number;
+    kecamatan_nama: string;
+    gugus: number;
+    jumlah_siswa: number;
+    pabp: number;
+    pendidikan_pancasila: number;
+    ipas: number;
+    bahasa_jawa: number;
+    bahasa_indonesia: number;
+    seni_budaya: number;
+    bahasa_inggris: number;
+    pjok: number;
+    matematika: number;
+    wajib_nilai: number;
+    sudah_nilai: string;
+    avg_nilai: string;
 }

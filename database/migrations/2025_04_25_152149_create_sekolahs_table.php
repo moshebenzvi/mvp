@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->string('npsn')->unique();
-            $table->foreignId('guguses_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('kecamatan_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('gugus_id')->constrained('gugus', 'id')->cascadeOnDelete();
             $table->timestamps();
         });
     }

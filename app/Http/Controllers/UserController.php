@@ -9,15 +9,16 @@ class UserController extends Controller
     public function index()
     {
         return inertia('Users/Index', [
-            'users' => \App\Models\User::with('roles', 'userProfile', 'userProfile.guguses', 'userProfile.kecamatan')
-                ->get()
+            'users' => \App\Models\User::with('roles', 'gugus.kecamatan')->get()
                 ->map(function ($user) {
-                    $user->kecamatan = $user->userProfile?->kecamatan->nama;
-                    $user->gugus = $user->userProfile?->guguses->gugus; 
-                    $user->role = $user->roles->first()?->name; 
-                    unset($user->roles); // remove the original roles array
-                    unset($user->userProfile); // remove the original userProfile object
-                    return $user;
+                    return [
+                        'id' => $user->id,
+                        'name' => $user->name,
+                        'email' => $user->email,
+                        'role' => $user->roles->pluck('name')->first(),
+                        'kecamatan' => $user->gugus->kecamatan->nama,
+                        'gugus' => $user->gugus->gugus,
+                    ];
                 })
         ]);
     }

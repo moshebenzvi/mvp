@@ -23,15 +23,15 @@ export const columns: ColumnDef<SiswaController>[] = [
         header: ({ column }) => <DataTableColumnHeader column={column} title="NISN" />,
     },
     {
-        accessorKey: 'nama_sekolah',
+        accessorKey: 'sekolah',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Sekolah" />,
     },
     {
-        accessorKey: 'npsn_sekolah',
+        accessorKey: 'npsn',
         header: ({ column }) => <DataTableColumnHeader column={column} title="NPSN" />,
     },
     {
-        accessorKey: 'nama_kecamatan',
+        accessorKey: 'kecamatan',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Kecamatan" />,
     },
     // {

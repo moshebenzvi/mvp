@@ -12,6 +12,8 @@ class Gugus extends Model
     /** @use HasFactory<\Database\Factories\GugusFactory> */
     use HasFactory;
 
+    protected $table = 'gugus';
+
     protected $fillable = [
         'gugus',
         'kecamatan_id',
@@ -23,17 +25,12 @@ class Gugus extends Model
 
     public function kecamatan(): BelongsTo
     {
-        return $this->belongsTo(Kecamatan::class);
-    }
-
-    public function userProfile(): HasMany
-    {
-        return $this->hasMany(UserProfile::class);
+        return $this->belongsTo(Kecamatan::class)->withDefault();
     }
 
     public function sekolahs(): HasMany
     {
-        return $this->hasMany(Sekolah::class, 'guguses_id');
+        return $this->hasMany(Sekolah::class, 'gugus_id');
     }
 
 }

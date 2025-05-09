@@ -1,9 +1,8 @@
-import AppLayout from '@/layouts/app-layout';
-import type { BreadcrumbItem, UserController } from '@/types';
-import { Head } from '@inertiajs/react';
 import { DataTable } from '@/components/data-table';
+import AppLayout from '@/layouts/app-layout';
+import type { BreadcrumbItem, User } from '@/types';
+import { Head } from '@inertiajs/react';
 import { columns } from './tableColumns';
-
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -16,7 +15,8 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Index({ users }: { users: UserController[] }) {
+export default function Index({ users }: { users: User[] }) {
+    console.log(users);
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Users" />

@@ -7,6 +7,9 @@ use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\SekolahImport;
+use App\Imports\SiswaImport;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,34 +22,6 @@ class DatabaseSeeder extends Seeder
         Role::create(['name' => 'Dinas']);
         Role::create(['name' => 'Operator']);
         Role::create(['name' => 'Korektor']);
-
-        User::factory()->create([
-            'name' => 'Admin User',
-            'email' => 'admin@admin.com',
-            'password' => bcrypt('password'),
-        ])->assignRole('Admin');
-
-        // User::factory(20)->create();
-
-        $korektor = User::factory()->create([
-            'name' => 'Korektor User',
-            'email' => 'korektor@korektor.com',
-            'password' => bcrypt('password'),
-        ])->assignRole('Korektor')->id;
-
-        $dinas = User::factory()->create([
-            'name' => 'Dinas User',
-            'email' => 'dinas@dinas.com',
-            'password' => bcrypt('password'),
-        ])->assignRole('Dinas')->id;
-
-        $operator = User::factory()->create([
-            'name' => 'Operator User',
-            'email' => 'operator@operator.com',
-            'password' => bcrypt('password'),
-        ])->assignRole('Operator')->id;
-
-
 
         $kecamatans = ['Panggul', 'Munjungan', 'Pule', 'Dongko', 'Tugu', 'Karangan', 'Kampak', 'Watulimo', 'Bendungan', 'Gandusari', 'Trenggalek', 'Pogalan', 'Durenan', 'Suruh'];
         foreach ($kecamatans as $kecamatan) {
@@ -62,8 +37,6 @@ class DatabaseSeeder extends Seeder
                 'active' => true,
             ]);
         }
-
-        // \App\Models\UserProfile::factory(21)->create();
 
         $guguses = [
             1 => 4,
@@ -92,19 +65,42 @@ class DatabaseSeeder extends Seeder
             }
         }
 
+        User::factory()->create([
+            'name' => 'Admin User',
+            'email' => 'admin@admin.com',
+            'password' => bcrypt('password'),
+        ])->assignRole('Admin');
 
-//        \App\Models\Gugus::factory(40)->create();
+        // User::factory(20)->create();
 
-//        \App\Models\Sekolah::factory(50)->create();
+        $korektor = User::factory()->create([
+            'gugus_id' => \App\Models\Gugus::inRandomOrder()->first()->id,
+            'name' => 'Korektor User',
+            'email' => 'korektor@korektor.com',
+            'password' => bcrypt('password'),
+        ])->assignRole('Korektor')->id;
+
+        $dinas = User::factory()->create([
+            'name' => 'Dinas User',
+            'email' => 'dinas@dinas.com',
+            'password' => bcrypt('password'),
+        ])->assignRole('Dinas')->id;
+
+        $operator = User::factory()->create([
+            'name' => 'Operator User',
+            'email' => 'operator@operator.com',
+            'password' => bcrypt('password'),
+        ])->assignRole('Operator')->id;
+
+
+        //        \App\Models\Sekolah::factory(50)->create();
 //
 //        \App\Models\Siswa::factory(250)->create();
 //
 //        \App\Models\Nilai::factory(250*5)->create(); // siswa * 9
 
-        \App\Models\UserProfile::factory()->create([
-            'user_id' => $korektor,
-            'guguses_id' => \App\Models\Gugus::inRandomOrder()->first()->id,
-            'kecamatan_id' => \App\Models\Kecamatan::inRandomOrder()->first()->id,
-        ]);
+        Excel::import(new SekolahImport(), public_path('/sekolahs/Data_Sekolah.xlsx'));
+        Excel::import(new SiswaImport(), public_path('/siswas/Data_Siswa.xlsx'));
+
     }
 }

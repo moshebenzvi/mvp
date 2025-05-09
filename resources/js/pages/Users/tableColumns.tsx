@@ -1,8 +1,8 @@
-import type { UserController } from '@/types';
+import type { User } from '@/types';
 import { ColumnDef } from '@tanstack/react-table';
 import { DataTableColumnHeader } from '@/components/data-table-column-header';
 
-export const columns: ColumnDef<UserController>[] = [
+export const columns: ColumnDef<User>[] = [
     {
         accessorKey: 'id',
         header: ({ column }) => (
