@@ -8,19 +8,17 @@ class RankingSiswaController extends Controller
 {
     public function index()
     {
-        $rankings = \App\Models\RankingSiswa::with('siswa', 'sekolah', 'sekolah.guguses')
-            ->get()->sortByDesc('id')
-            ->map(function ($ranking) {
-                $ranking->siswa_nama = $ranking->siswa->nama;
-                $ranking->nisn = $ranking->siswa->nisn;
-                $ranking->sekolah_nama = $ranking->sekolah->nama;
-                $ranking->npsn = $ranking->sekolah->npsn;
-                $ranking->kecamatan = $ranking->sekolah->kecamatan->nama;
-                $ranking->gugus = $ranking->sekolah->guguses->gugus;
-
-                unset($ranking->sekolah);
-                unset($ranking->siswa);
-                return $ranking;
+        $rankings = \App\Models\RankingSiswa::with('siswa', 'sekolah', 'sekolah.gugus.kecamatan')->get()
+            ->map(function ($ranking_siswa) {
+                return [
+                    'siswa_id' => $ranking_siswa->siswa_id,
+                    'siswa_nama' => $ranking_siswa->siswa->nama,
+                    'nisn' => strlen($ranking_siswa->siswa->nisn) === 9 ? '0' . $ranking_siswa->siswa->nisn : $ranking_siswa->siswa->nisn,
+                    'sekolah_nama' => $ranking_siswa->sekolah->nama,
+                    'npsn' => $ranking_siswa->sekolah->npsn,
+                    'kecamatan' => $ranking_siswa->sekolah->gugus->kecamatan->nama,
+                    'avg_nilai' => $ranking_siswa->avg_nilai ?? 0,
+                ];
             });
 
         return inertia('Rankings/Siswa/Index', [

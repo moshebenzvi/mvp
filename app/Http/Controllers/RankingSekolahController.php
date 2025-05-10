@@ -8,16 +8,16 @@ class RankingSekolahController extends Controller
 {
     private function getRankings()
     {
-        return \App\Models\RankingSekolah::with('sekolah', 'sekolah.kecamatan', 'sekolah.guguses')
-            ->get()
-            ->map(function ($ranking) {
-                $ranking->sekolah_nama = $ranking->sekolah->nama;
-                $ranking->npsn = $ranking->sekolah->npsn;
-                $ranking->kecamatan_id = $ranking->sekolah->kecamatan_id;
-                $ranking->kecamatan_nama = $ranking->sekolah->kecamatan->nama;
-                $ranking->gugus = $ranking->sekolah->guguses->gugus;
-                unset($ranking->sekolah);
-                return $ranking;
+        return \App\Models\RankingSekolah::with('sekolah.gugus.kecamatan')->get()
+            ->map(function ($ranking_sekolah) {
+                return [
+                    'sekolah_id' => $ranking_sekolah->sekolah_id,
+                    'sekolah' => $ranking_sekolah->sekolah->nama,
+                    'npsn' => $ranking_sekolah->sekolah->npsn,
+                    'kecamatan' => $ranking_sekolah->sekolah->gugus->kecamatan->nama,
+                    'gugus' => $ranking_sekolah->sekolah->gugus->gugus,
+                    'avg_nilai' => $ranking_sekolah->avg_nilai ?? 0,
+                ];
             });
     }
     public function index()

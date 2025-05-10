@@ -17,6 +17,9 @@ export const columns: ColumnDef<RangkingSiswaController>[] = [
     {
         accessorKey: 'nisn',
         header: ({ column }) => <DataTableColumnHeader column={column} title="NISN" />,
+        cell: ({ row }) => {
+            return <div className="text-center">{row.getValue('nisn')}</div>;
+        },
     },
     {
         accessorKey: 'sekolah_nama',

@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 // Route::get('/', function () {
@@ -9,13 +8,29 @@ use Inertia\Inertia;
 // })->name('home');
 
 Route::get('/coba', function () {
-    $mapelId = 1; // Ganti dengan ID mapel yang sesuai
-    return \App\Models\Sekolah::with([
-        'siswas.nilais' => function ($query) use ($mapelId) {
-            $query->where('mapel_id', $mapelId);
-        }
-    ])->find(1);
-    ;
+    return \App\Models\RankingSekolah::with('sekolah.gugus.kecamatan')->get()
+        ->map(function ($ranking_sekolah) {
+            return [
+                'sekolah_id' => $ranking_sekolah->sekolah_id,
+                'sekolah' => $ranking_sekolah->sekolah->nama,
+                'npsn' => $ranking_sekolah->sekolah->npsn,
+                'kecamatan' => $ranking_sekolah->sekolah->gugus->kecamatan->nama,
+                'gugus' => $ranking_sekolah->sekolah->gugus->gugus,
+                'avg_nilai' => $ranking_sekolah->avg_nilai ?? 0,
+            ];
+        })
+        // ->map(function ($ranking_siswa) {
+        //     return [
+        //         'siswa_id' => $ranking_siswa->siswa_id,
+        //         'siswa_nama' => $ranking_siswa->siswa->nama,
+        //         'nisn' => $ranking_siswa->siswa->nisn,
+        //         'sekolah_nama' => $ranking_siswa->sekolah->nama,
+        //         'npsn' => $ranking_siswa->sekolah->npsn,
+        //         'kecamatan' => $ranking_siswa->sekolah->gugus->kecamatan->nama,
+        //         'avg_nilai' => $ranking_siswa->avg_nilai ?? 0,
+        //     ];
+        // })
+        ;
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -53,7 +68,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';
 
-//todo: refactor gugus lebih tinggi dripada kecamatan karena ada tabel gugus
 //todo: sekolah: download data sekolah
 //todo: siswa: unduh dan upload siswa, edit nilai siswa
 //todo: log activity

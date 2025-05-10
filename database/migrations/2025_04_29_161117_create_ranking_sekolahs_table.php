@@ -26,7 +26,7 @@ return new class extends Migration {
                 CASE WHEN COUNT(rs.MATEMATIKA) = COUNT(s.sekolah_id) THEN 1 ELSE 0 END AS MATEMATIKA,
                 COUNT(s.sekolah_id) * 9 AS wajib_nilai,
                 SUM(rs.count_nilai) AS sudah_nilai,
-                AVG(avg_nilai) AS avg_nilai
+                COALESCE(AVG(avg_nilai), 0) AS avg_nilai
             FROM
                 ranking_siswas rs
                 LEFT JOIN siswas s ON rs.sekolah_id = s.id

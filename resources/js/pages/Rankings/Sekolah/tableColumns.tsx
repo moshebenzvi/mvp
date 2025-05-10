@@ -11,7 +11,7 @@ export const columns: ColumnDef<RangkingSekolahController>[] = [
         },
     },
     {
-        accessorKey: 'sekolah_nama',
+        accessorKey: 'sekolah',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Sekolah" />,
     },
     {
@@ -19,7 +19,7 @@ export const columns: ColumnDef<RangkingSekolahController>[] = [
         header: ({ column }) => <DataTableColumnHeader column={column} title="NPSN" />,
     },
     {
-        accessorKey: 'kecamatan_nama',
+        accessorKey: 'kecamatan',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Kecamatan" />,
     },
     {

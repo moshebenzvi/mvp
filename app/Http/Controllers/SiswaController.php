@@ -19,7 +19,7 @@ class SiswaController extends Controller
                         'id' => $siswa->id,
                         'nama' => $siswa->nama,
                         'kelamin' => $siswa->kelamin,
-                        'nisn' => $siswa->nisn,
+                        'nisn' => strlen($siswa->nisn) === 9 ? '0' . $siswa->nisn : $siswa->nisn,
                         'sekolah' => $siswa->sekolah->nama,
                         'npsn' => $siswa->sekolah->npsn,
                         'kecamatan' => $siswa->sekolah->gugus->kecamatan->nama,

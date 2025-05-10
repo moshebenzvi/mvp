@@ -1,7 +1,7 @@
 'use client';
 
 import AppLayout from '@/layouts/app-layout';
-import type { BreadcrumbItem, Mapel, Sekolah, SharedData, Siswa, User } from '@/types';
+import type { BreadcrumbItem, Gugus, Kecamatan, Mapel, Sekolah, SharedData, Siswa, User } from '@/types';
 import { Head, router } from '@inertiajs/react';
 import axios from 'axios';
 
@@ -13,7 +13,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { usePage } from '@inertiajs/react';
 import { AlertCircle } from 'lucide-react';
 import type React from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import {
     AlertDialog,
@@ -39,21 +39,13 @@ export default function Index({ korektor, mapels, sekolah }: { korektor: User; m
     const [selectedSekolah, setSelectedSekolah] = useState<string>('');
     const [selectedMapel, setSelectedMapel] = useState<string>('');
     const [displayedStudents, setDisplayedStudents] = useState<Siswa[]>([]);
-    // const [sekolahs, setSekolahs] = useState<Sekolah[]>([]);
     const [hasUngraded, setHasUngraded] = useState<boolean>(false);
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     // Extract kecamatan and gugus from user data
-    const kecamatanNama = korektor.gugus.kecamatan.nama;
-    const gugusValue = korektor.gugus.gugus;
-
-    // Initialize schools from user data
-    // useEffect(() => {
-    //     if (korektor && korektor.user_profile && korektor.user_profile.guguses) {
-    //         setSekolahs(sekolah || []);
-    //     }
-    // }, [korektor]);
+    const kecamatanNama = (korektor as User & { gugus: Gugus & { kecamatan: Kecamatan } }).gugus.kecamatan.nama;
+    const gugusValue = (korektor as User & { gugus: Gugus }).gugus.gugus;
 
     // Fetch students data for the selected school and mapel
     const fetchStudentsData = async () => {
@@ -80,7 +72,8 @@ export default function Index({ korektor, mapels, sekolah }: { korektor: User; m
 
                 return {
                     ...siswa,
-                    tempNilai: existingNilai ? existingNilai.nilai : '',
+                    // tempNilai: existingNilai ? existingNilai.nilai : '',
+                    tempNilai: existingNilai ? existingNilai.nilai : (Math.random() * 100).toFixed(2), // Use random value for testing
                     hasExistingNilai: !!existingNilai, // Flag to track if nilai already exists
                 };
             });
@@ -121,7 +114,7 @@ export default function Index({ korektor, mapels, sekolah }: { korektor: User; m
                 nilai: Number(student.tempNilai),
             }));
 
-        console.log('Data to submit:', submissionData);
+        // console.log('Data to submit:', submissionData);
 
         router.post(
             '/nilais',
@@ -131,11 +124,11 @@ export default function Index({ korektor, mapels, sekolah }: { korektor: User; m
             },
             {
                 preserveScroll: true,
-                onSuccess: () => {
-                    console.log('Nilai created successfully');
+                onSuccess: (page) => {
                     // Fetch fresh data using Axios
                     fetchStudentsData();
                     setIsSubmitting(false);
+                    console.log(page.props)
                 },
                 onError: (errors) => {
                     console.error('Error create nilai:', errors);
@@ -172,10 +165,10 @@ export default function Index({ korektor, mapels, sekolah }: { korektor: User; m
                     <form onSubmit={handleSubmit}>
                         <div className="mb-6 grid grid-cols-3 grid-rows-2 gap-x-4">
                             <div>
-                                <Label htmlFor="mapel-select">Mata Pelajaran</Label>
+                                <Label>Mata Pelajaran</Label>
                             </div>
                             <div>
-                                <Label htmlFor="sekolah-select">Sekolah</Label>
+                                <Label>Sekolah</Label>
                             </div>
                             <div className="row-start-2">
                                 <Select value={selectedMapel} onValueChange={setSelectedMapel}>
@@ -234,6 +227,7 @@ export default function Index({ korektor, mapels, sekolah }: { korektor: User; m
                                                     <Input
                                                         required={!student.hasExistingNilai}
                                                         value={student.tempNilai || ''}
+                                                        // value={student.tempNilai || (Math.random() * 100).toFixed(0)}
                                                         onChange={(e) => handleNilaiChange(student.id, e.target.value)}
                                                         className={`w-full ${student.hasExistingNilai ? 'bg-gray-100' : ''}`}
                                                         type="number"
@@ -282,21 +276,27 @@ export default function Index({ korektor, mapels, sekolah }: { korektor: User; m
                                             <AlertDialogDescription>
                                                 Dengan ini saya selaku operator <span className="text-blue-500">{auth.user.name}</span> <br />
                                                 menyatakan bahwa nilai siswa yang saya masukkan untuk <br />
-                                                <div className="grid grid-cols-[100px_1fr]">
-                                                    <span>Sekolah</span>
-                                                    <span>
-                                                        : {sekolah.find((sekolah) => sekolah.id.toString() === selectedSekolah)?.nama || 'N/A'}
-                                                    </span>
-                                                    <span>Mata Pelajaran</span>
-                                                    <span>
-                                                        :{' '}
-                                                        <span className="text-blue-500">
-                                                            {mapels.find((mapel) => mapel.id.toString() === selectedMapel)?.nama || 'N/A'}
+                                                <span className="inline-block">
+                                                    <span className="grid grid-cols-[100px_1fr]">
+                                                        <span>Sekolah</span>
+                                                        <span>
+                                                            :{' '}
+                                                            <span className="text-blue-500">
+                                                                {sekolah.find((sekolah) => sekolah.id.toString() === selectedSekolah)?.nama || 'N/A'}
+                                                            </span>
+                                                        </span>
+                                                        <span>Mata Pelajaran</span>
+                                                        <span>
+                                                            :{' '}
+                                                            <span className="text-blue-500">
+                                                                {mapels.find((mapel) => mapel.id.toString() === selectedMapel)?.nama || 'N/A'}
+                                                            </span>
                                                         </span>
                                                     </span>
-                                                </div>
+                                                </span>
                                                 adalah benar dan dapat dipertanggungjawabkan. <br />
                                                 <br />
+                                                {/* <Separator /> */}
                                                 <br />
                                                 *Setelah klik submit anda tidak diperkenankan untuk mengubah data nilai siswa. Tutup jendela untuk
                                                 memeriksa kembali data nilai.

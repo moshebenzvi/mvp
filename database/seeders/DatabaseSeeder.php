@@ -99,8 +99,8 @@ class DatabaseSeeder extends Seeder
 //
 //        \App\Models\Nilai::factory(250*5)->create(); // siswa * 9
 
-        Excel::import(new SekolahImport(), public_path('/sekolahs/Data_Sekolah.xlsx'));
-        Excel::import(new SiswaImport(), public_path('/siswas/Data_Siswa.xlsx'));
+        Excel::import(new SekolahImport(), public_path('/import/Data_Sekolah.xlsx'));
+        Excel::import(new SiswaImport(), public_path('/import/Data_Siswa.xlsx'));
 
     }
 }

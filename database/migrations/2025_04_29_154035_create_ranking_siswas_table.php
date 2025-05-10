@@ -25,7 +25,7 @@ return new class extends Migration {
                 MAX(CASE WHEN m.nama = 'PJOK' THEN n.nilai END) AS PJOK,
                 MAX(CASE WHEN m.nama = 'MATEMATIKA' THEN n.nilai END) AS MATEMATIKA,
                 COUNT(n.nilai) AS count_nilai,
-                AVG(n.nilai) AS avg_nilai
+                COALESCE(AVG(n.nilai), 0) AS avg_nilai
             FROM siswas s
             LEFT JOIN nilais n ON s.id = n.siswa_id
             LEFT JOIN mapels m ON n.mapel_id = m.id
