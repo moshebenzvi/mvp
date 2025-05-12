@@ -9,7 +9,7 @@ class MapelController extends Controller
     public function index()
     {
         return inertia('Mapels/Index', [
-            'mapels' => \App\Models\Mapel::all()
+            'mapels' => \App\Models\Mapel::orderBy('id')->get(),
         ]);
     }
 

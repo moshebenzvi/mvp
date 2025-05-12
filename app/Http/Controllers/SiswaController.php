@@ -13,7 +13,7 @@ class SiswaController extends Controller
     public function index()
     {
         return inertia('Siswas/Index', [
-            'siswas' => \App\Models\Siswa::with('sekolah.gugus.kecamatan')->get()
+            'siswas' => \App\Models\Siswa::with('sekolah.gugus.kecamatan', 'nilais.mapel')->limit(2)->get()
                 ->map(function ($siswa) {
                     return [
                         'id' => $siswa->id,
@@ -23,6 +23,15 @@ class SiswaController extends Controller
                         'sekolah' => $siswa->sekolah->nama,
                         'npsn' => $siswa->sekolah->npsn,
                         'kecamatan' => $siswa->sekolah->gugus->kecamatan->nama,
+                        'nilais' => $siswa->nilais->map(function ($nilai) {
+                            return [
+                                'id' => $nilai->id,
+                                'siswa_id' => $nilai->siswa_id,
+                                'mapel_id' => $nilai->mapel_id,
+                                'mapel' => $nilai->mapel->nama,
+                                'nilai' => $nilai->nilai,
+                            ];
+                        })
                     ];
                 })
         ]);

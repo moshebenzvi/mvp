@@ -14,7 +14,7 @@ return new class extends Migration {
             CREATE OR REPLACE VIEW ranking_sekolahs AS
             SELECT
                 rs.sekolah_id,
-                COUNT(s.sekolah_id) AS jumlah_siswa,
+                COUNT(siswa_id) AS jumlah_siswa,
                 CASE WHEN COUNT(rs.PABP) = COUNT(s.sekolah_id) THEN 1 ELSE 0 END AS PABP,
                 CASE WHEN COUNT(rs.PENDIDIKAN_PANCASILA) = COUNT(s.sekolah_id) THEN 1 ELSE 0 END AS PENDIDIKAN_PANCASILA,
                 CASE WHEN COUNT(rs.IPAS) = COUNT(s.sekolah_id) THEN 1 ELSE 0 END AS IPAS,

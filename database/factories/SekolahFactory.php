@@ -19,8 +19,7 @@ class SekolahFactory extends Factory
         return [
             'nama' => $this->faker->unique()->company(),
             'npsn' => $this->faker->unique()->numerify('########'),
-            'guguses_id' => \App\Models\Gugus::inRandomOrder()->first()->id,
-            'kecamatan_id' => \App\Models\Kecamatan::inRandomOrder()->first()->id,
+            'gugus_id' => \App\Models\Gugus::inRandomOrder()->first()->id,
         ];
     }
 }

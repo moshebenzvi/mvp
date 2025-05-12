@@ -13,8 +13,7 @@ class Sekolah extends Model
     protected $fillable = [
         'nama',
         'npsn',
-        'guguses_id',
-        'kecamatan_id',
+        'gugus_id',
     ];
 
     protected $hidden = [

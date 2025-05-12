@@ -6,9 +6,10 @@ use Illuminate\Http\Request;
 
 class RankingSekolahController extends Controller
 {
-    private function getRankings()
+
+    public function index()
     {
-        return \App\Models\RankingSekolah::with('sekolah.gugus.kecamatan')->get()
+        $rankings = \App\Models\RankingSekolah::with('sekolah.gugus.kecamatan')->get()
             ->map(function ($ranking_sekolah) {
                 return [
                     'sekolah_id' => $ranking_sekolah->sekolah_id,
@@ -19,17 +20,9 @@ class RankingSekolahController extends Controller
                     'avg_nilai' => $ranking_sekolah->avg_nilai ?? 0,
                 ];
             });
-    }
-    public function index()
-    {
-        $rankings = $this->getRankings();
+
         return inertia('Rankings/Sekolah/Index', [
             'rankings' => $rankings,
         ]);
-    }
-    public function refresh()
-    {
-        $rankings = $this->getRankings();
-        return response()->json($rankings);
     }
 }

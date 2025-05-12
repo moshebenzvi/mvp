@@ -8,29 +8,28 @@ use Inertia\Inertia;
 // })->name('home');
 
 Route::get('/coba', function () {
-    return \App\Models\RankingSekolah::with('sekolah.gugus.kecamatan')->get()
-        ->map(function ($ranking_sekolah) {
+    return \App\Models\Siswa::with('sekolah.gugus.kecamatan', 'nilais.mapel')->limit(1)->get()
+        ->map(function ($siswa) {
             return [
-                'sekolah_id' => $ranking_sekolah->sekolah_id,
-                'sekolah' => $ranking_sekolah->sekolah->nama,
-                'npsn' => $ranking_sekolah->sekolah->npsn,
-                'kecamatan' => $ranking_sekolah->sekolah->gugus->kecamatan->nama,
-                'gugus' => $ranking_sekolah->sekolah->gugus->gugus,
-                'avg_nilai' => $ranking_sekolah->avg_nilai ?? 0,
+                'id' => $siswa->id,
+                'nama' => $siswa->nama,
+                'kelamin' => $siswa->kelamin,
+                'nisn' => strlen($siswa->nisn) === 9 ? '0' . $siswa->nisn : $siswa->nisn,
+                'sekolah' => $siswa->sekolah->nama,
+                'npsn' => $siswa->sekolah->npsn,
+                'kecamatan' => $siswa->sekolah->gugus->kecamatan->nama,
+                'nilais' => $siswa->nilais->map(function ($nilai) {
+                    return [
+                        'id' => $nilai->id,
+                        'siswa_id' => $nilai->siswa_id,
+                        'mapel_id' => $nilai->mapel_id,
+                        'mapel' => $nilai->mapel->nama,
+                        'nilai' => $nilai->nilai,
+                    ];
+                })
             ];
         })
-        // ->map(function ($ranking_siswa) {
-        //     return [
-        //         'siswa_id' => $ranking_siswa->siswa_id,
-        //         'siswa_nama' => $ranking_siswa->siswa->nama,
-        //         'nisn' => $ranking_siswa->siswa->nisn,
-        //         'sekolah_nama' => $ranking_siswa->sekolah->nama,
-        //         'npsn' => $ranking_siswa->sekolah->npsn,
-        //         'kecamatan' => $ranking_siswa->sekolah->gugus->kecamatan->nama,
-        //         'avg_nilai' => $ranking_siswa->avg_nilai ?? 0,
-        //     ];
-        // })
-        ;
+    ;
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -38,14 +37,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('dashboard');
     })->name('home');
 
-    Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
-    })->name('dashboard');
+    // Route::get('dashboard', function () {
+    //     return Inertia::render('dashboard');
+    // })->name('dashboard');
+
+    Route::get('dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('dashboard/data', [\App\Http\Controllers\DashboardController::class, 'dashboardData'])->name('dashboard.data');
+    Route::get('penyelesaian', [\App\Http\Controllers\DashboardController::class, 'penyelesaian'])->name('penyelesaian');
 
     Route::get('ranking/siswas', [\App\Http\Controllers\RankingSiswaController::class, 'index'])->name('ranking.siswas.index');
     Route::get('ranking/sekolahs', [\App\Http\Controllers\RankingSekolahController::class, 'index'])->name('ranking.sekolahs.index');
-    Route::get('ranking/sekolahs/refresh', [\App\Http\Controllers\RankingSekolahController::class, 'refresh'])->name('ranking.sekolahs.refresh');
-
 
     Route::middleware(['role:Admin'])->group(function () {
         Route::get('sekolahs', [\App\Http\Controllers\SekolahController::class, 'index'])->name('sekolahs.index');
@@ -55,11 +56,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('siswas', [\App\Http\Controllers\SiswaController::class, 'index'])->name('siswas.index');
         Route::post('siswas/import', [\App\Http\Controllers\SiswaController::class, 'import'])->name('siswas.import');
 
+        //Route::resource('nilais', \App\Http\Controllers\NilaiController::class)->only(['update', 'destroy']);;
+//        Route::delete('nilais/{nilai}/{siswa}', [\App\Http\Controllers\NilaiController::class, 'destroy'])->name('nilais.destroy');
+        Route::resource('nilais', \App\Http\Controllers\NilaiController::class)->only(['index', 'update', 'destroy']);
+
     });
 
     Route::middleware(['role:Korektor'])->group(function () {
-        // Route::get('nilais', [\App\Http\Controllers\NilaiController::class, 'index'])->name('nilais.index');
         Route::resource('nilais', \App\Http\Controllers\NilaiController::class)->only(['index', 'store']);
+        ;
         Route::get('siswas/refresh', [\App\Http\Controllers\SiswaController::class, 'refresh'])->name('siswas.refresh');
     });
 

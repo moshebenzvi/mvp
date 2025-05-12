@@ -128,7 +128,7 @@ export default function Index({ korektor, mapels, sekolah }: { korektor: User; m
                     // Fetch fresh data using Axios
                     fetchStudentsData();
                     setIsSubmitting(false);
-                    console.log(page.props)
+                    // console.log(page.props)
                 },
                 onError: (errors) => {
                     console.error('Error create nilai:', errors);
@@ -294,6 +294,7 @@ export default function Index({ korektor, mapels, sekolah }: { korektor: User; m
                                                         </span>
                                                     </span>
                                                 </span>
+                                                <br />
                                                 adalah benar dan dapat dipertanggungjawabkan. <br />
                                                 <br />
                                                 {/* <Separator /> */}

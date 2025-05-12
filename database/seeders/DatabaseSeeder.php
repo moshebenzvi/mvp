@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Imports\UsersImport;
 use App\Models\User;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -65,16 +66,18 @@ class DatabaseSeeder extends Seeder
             }
         }
 
+        \App\Models\Sekolah::factory(3)->create();
+
+        \App\Models\Siswa::factory(9)->create();
+
         User::factory()->create([
             'name' => 'Admin User',
             'email' => 'admin@admin.com',
             'password' => bcrypt('password'),
         ])->assignRole('Admin');
 
-        // User::factory(20)->create();
-
         $korektor = User::factory()->create([
-            'gugus_id' => \App\Models\Gugus::inRandomOrder()->first()->id,
+            'gugus_id' => \App\Models\Sekolah::inRandomOrder()->first()->gugus_id,
             'name' => 'Korektor User',
             'email' => 'korektor@korektor.com',
             'password' => bcrypt('password'),
@@ -93,14 +96,12 @@ class DatabaseSeeder extends Seeder
         ])->assignRole('Operator')->id;
 
 
-        //        \App\Models\Sekolah::factory(50)->create();
-//
-//        \App\Models\Siswa::factory(250)->create();
-//
-//        \App\Models\Nilai::factory(250*5)->create(); // siswa * 9
+        \App\Models\Nilai::factory(9*9)->create(); // siswa * 9
+        // Excel::import(new SekolahImport(), public_path('/import/Data_Sekolah.xlsx'));
+        // Excel::import(new SiswaImport(), public_path('/import/Data_Siswa.xlsx'));
+        // Excel::import(new UsersImport(), public_path('/import/Data_User.xlsx'));
 
-        Excel::import(new SekolahImport(), public_path('/import/Data_Sekolah.xlsx'));
-        Excel::import(new SiswaImport(), public_path('/import/Data_Siswa.xlsx'));
 
+        // $this->call(NilaiSeeder::class);
     }
 }

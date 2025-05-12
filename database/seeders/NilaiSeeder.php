@@ -13,6 +13,6 @@ class NilaiSeeder extends Seeder
      */
     public function run(): void
     {
-        Nilai::factory(13140*9)->create();
+        Nilai::factory(4009*9)->create();
     }
 }

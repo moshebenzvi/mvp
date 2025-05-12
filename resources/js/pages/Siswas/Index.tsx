@@ -46,7 +46,7 @@ export default function Index({ siswas }: { siswas: SiswaController[] }) {
                 <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl md:min-h-min">
                     <DataTable columns={columns} data={siswas} title={'Data Siswa'} />
                 </div>
-                {/*  
+                {/*
                 <Dialog open={open} onOpenChange={setOpen}>
                     <DialogTrigger asChild>
                         <Button>Upload Data Siswa</Button>

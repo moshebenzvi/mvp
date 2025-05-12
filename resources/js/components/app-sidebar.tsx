@@ -4,7 +4,12 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
+import axios from 'axios';
 import AppLogo from './app-logo';
+
+const { data: penyelesaian }: { data: any } = await axios.get(route('penyelesaian'));
+
+const tingkatPenyelesaian = penyelesaian[0].tingkat_penyelesaian ?? 0;
 
 const footerNavItems: NavItem[] = [
     // footer
@@ -27,20 +32,25 @@ export function AppSidebar() {
                   },
               ]
             : []),
-        {
-            title: 'Perankingan',
-            href: '#',
-            items: [
-                {
-                    title: 'Ranking Siswa',
-                    href: '/ranking/siswas',
-                },
-                {
-                    title: 'Ranking Sekolah',
-                    href: '/ranking/sekolahs',
-                },
-            ],
-        },
+        ...(tingkatPenyelesaian == 100 || String(userRole) === 'Admin'
+            ? [
+                  {
+                      title: 'Perankingan',
+                      href: '#',
+                      items: [
+                          {
+                              title: 'Ranking Siswa',
+                              href: '/ranking/siswas',
+                          },
+                          {
+                              title: 'Ranking Sekolah',
+                              href: '/ranking/sekolahs',
+                          },
+                      ],
+                  },
+              ]
+            : []),
+
         ...(String(userRole) === 'Admin'
             ? [
                   {

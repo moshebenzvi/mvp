@@ -14,10 +14,9 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import axios from 'axios';
 
 // Fetch the school data and extract the `data` property
-const { data: schoolData }: { data: DashboardRangkingController[] } = await axios.get(`ranking/sekolahs/refresh`);
+const { data: dashboardData }: { data: DashboardRangkingController[] } = await axios.get(route('dashboard.data'));
 
 export default function DashboardPage() {
-    // console.log(schoolData);
     // const [activeTab, setActiveTab] = useState('overview');
     const [searchTerm, setSearchTerm] = useState('');
     const [kecamatanFilter, setKecamatanFilter] = useState<string>('all');
@@ -28,21 +27,21 @@ export default function DashboardPage() {
 
     // Extract unique kecamatan and gugus values for filters
     const kecamatans = useMemo(() => {
-        const uniqueKecamatans = Array.from(new Set(schoolData.map((school) => school.kecamatan_nama)));
+        const uniqueKecamatans = Array.from(new Set(dashboardData.map((data) => data.kecamatan)));
         return uniqueKecamatans.sort();
     }, []);
 
     const gugus = useMemo(() => {
-        const uniqueGugus = Array.from(new Set(schoolData.map((school) => school.gugus)));
+        const uniqueGugus = Array.from(new Set(dashboardData.map((data) => data.gugus)));
         return uniqueGugus.sort((a, b) => a - b);
     }, []);
 
     // Filter schools based on search term and filters
     const filteredSchools = useMemo(() => {
-        return schoolData.filter((school) => {
-            const matchesSearch = school.sekolah_nama.toLowerCase().includes(searchTerm.toLowerCase()) || school.npsn.includes(searchTerm);
-            const matchesKecamatan = kecamatanFilter === 'all' || school.kecamatan_nama === kecamatanFilter;
-            const matchesGugus = gugusFilter === 'all' || school.gugus.toString() === gugusFilter;
+        return dashboardData.filter((data) => {
+            const matchesSearch = data.sekolah.toLowerCase().includes(searchTerm.toLowerCase()) || data.npsn.includes(searchTerm);
+            const matchesKecamatan = kecamatanFilter === 'all' || data.kecamatan === kecamatanFilter;
+            const matchesGugus = gugusFilter === 'all' || data.gugus.toString() === gugusFilter;
 
             return matchesSearch && matchesKecamatan && matchesGugus;
         });
@@ -62,12 +61,14 @@ export default function DashboardPage() {
 
     // Calculate summary statistics
     const summaryStats = useMemo(() => {
-        const totalSchools = schoolData.length;
-        const totalStudents = schoolData.reduce((sum, school) => sum + school.jumlah_siswa, 0);
-        const totalKecamatans = new Set(schoolData.map((school) => school.kecamatan_nama)).size;
-        const avgScore = schoolData.reduce((sum, school) => sum + Number.parseFloat(school.avg_nilai), 0) / totalSchools;
-        const completionRate =
-            (schoolData.reduce((sum, school) => sum + Number.parseInt(school.sudah_nilai) / school.wajib_nilai, 0) / totalSchools) * 100;
+        const totalSchools = dashboardData.length;
+        const totalStudents = dashboardData.reduce((sum, data) => sum + data.jumlah_siswa, 0);
+        const totalKecamatans = new Set(dashboardData.map((data) => data.kecamatan)).size;
+        const avgScore = dashboardData.reduce((sum, data) => sum + Number.parseFloat(data.avg_nilai), 0) / totalSchools;
+        const totalSudahNilai = dashboardData.reduce((sum, data) => sum + Number(data.sudah_nilai), 0);
+        const totalWajibNilai = dashboardData.reduce((sum, data) => sum + Number(data.wajib_nilai), 0);
+        const completionRate = (totalSudahNilai / totalWajibNilai) * 100;
+        // const completionRate = (dashboardData.reduce((sum, data) => sum + Number.parseInt(data.sudah_nilai) / data.wajib_nilai, 0) / totalSchools) * 100;
 
         return {
             totalSchools,
@@ -345,7 +346,7 @@ export default function DashboardPage() {
                                     <TableBody>
                                         {paginatedSchools.map((school) => (
                                             <TableRow key={school.sekolah_id}>
-                                                <TableCell className="font-medium">{school.sekolah_nama}</TableCell>
+                                                <TableCell className="font-medium">{school.sekolah}</TableCell>
                                                 <TableCell className="font-medium">{school.npsn}</TableCell>
                                                 <TableCell className="font-medium">{school.kecamatan_nama}</TableCell>
                                                 <TableCell>
