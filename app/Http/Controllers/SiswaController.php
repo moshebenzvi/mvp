@@ -13,7 +13,7 @@ class SiswaController extends Controller
     public function index()
     {
         return inertia('Siswas/Index', [
-            'siswas' => \App\Models\Siswa::with('sekolah.gugus.kecamatan', 'nilais.mapel')->limit(2)->get()
+            'siswas' => \App\Models\Siswa::with('sekolah.gugus.kecamatan', 'nilais.mapel')->get()
                 ->map(function ($siswa) {
                     return [
                         'id' => $siswa->id,

@@ -14,6 +14,23 @@ use Inertia\Response;
 class AuthenticatedSessionController extends Controller
 {
     /**
+     * Handle an incoming authentication request.
+     */
+    public function store(LoginRequest $request): RedirectResponse
+    {
+        $request->authenticate();
+
+        $request->session()->regenerate();
+
+        \App\Models\Aktifitas::create([
+           'user_id' => auth()->user()->id,
+           'aktifitas' => "Login",
+        ]);
+
+        return redirect()->intended(route('dashboard', absolute: false));
+    }
+
+    /**
      * Show the login page.
      */
     public function create(Request $request): Response
@@ -25,22 +42,15 @@ class AuthenticatedSessionController extends Controller
     }
 
     /**
-     * Handle an incoming authentication request.
-     */
-    public function store(LoginRequest $request): RedirectResponse
-    {
-        $request->authenticate();
-
-        $request->session()->regenerate();
-
-        return redirect()->intended(route('dashboard', absolute: false));
-    }
-
-    /**
      * Destroy an authenticated session.
      */
     public function destroy(Request $request): RedirectResponse
     {
+        \App\Models\Aktifitas::create([
+            'user_id' => auth()->user()->id,
+            'aktifitas' => "Log Out",
+        ]);
+
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();

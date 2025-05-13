@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class RankingSekolahController extends Controller
 {
@@ -24,5 +25,10 @@ class RankingSekolahController extends Controller
         return inertia('Rankings/Sekolah/Index', [
             'rankings' => $rankings,
         ]);
+    }
+
+    public function download()
+    {
+        return Excel::download(new \App\Exports\RankingSekolahExport(), 'Ranking Sekolah '.now().'.xlsx');
     }
 }

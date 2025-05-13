@@ -31,9 +31,16 @@ class NilaiController extends Controller
                 'nilai' => 'required|numeric|min:0|max:100',
             ])->validate();
 
+            $siswa = \App\Models\Siswa::with('sekolah')->findOrFail($validated['siswa_id']);
+            $mapel = \App\Models\Mapel::findOrFail($validated['mapel_id']);
+            \App\Models\Aktifitas::create([
+                'user_id' => auth()->user()->id,
+                'aktifitas' => 'Input nilai '. $siswa->nama . ' (' . $siswa->nisn . ') dari ' . $siswa->sekolah->nama. ' (' . $siswa->sekolah->npsn . ')' . '. Mapel ' . $mapel->nama . ' dengan nilai: '. $validated['nilai'],
+            ]);
+
             \App\Models\Nilai::create($validated);
         }
-        return redirect('nilais')->with('success', 'Nilai berhasil ditambahkan.');
+//        return redirect('nilais')->with('success', 'Nilai berhasil ditambahkan.');
         // return redirect()->back()->with('success', 'Nilai berhasil ditambahkan.');
     }
 
@@ -45,9 +52,19 @@ class NilaiController extends Controller
             'nilais.*.nilai' => 'required|numeric|min:0|max:100',
         ]);
 
-        foreach ($request->nilais as $nilaiData) {
-            \App\Models\Nilai::where('id', $nilaiData['id'])
-                ->update(['nilai' => $nilaiData['nilai']]);
+        foreach ($request->nilais as $nilai) {
+            $nilaiData = \App\Models\Nilai::findOrFail($nilai['id']);
+            if ($nilaiData->nilai !== $nilai['nilai']) {
+                $siswa = \App\Models\Siswa::with('sekolah')->findOrFail($nilaiData['siswa_id']);
+                $mapel = \App\Models\Mapel::findOrFail($nilaiData['mapel_id']);
+                \App\Models\Aktifitas::create([
+                    'user_id' => auth()->user()->id,
+                    'aktifitas' => 'Update nilai '. $siswa->nama . ' (' . $siswa->nisn . ') dari ' . $siswa->sekolah->nama. ' (' . $siswa->sekolah->npsn . ')' . '. Mapel ' . $mapel->nama . ' dari nilai: '. $nilaiData['nilai']. ' menjadi: '. $nilai['nilai'],
+                ]);
+
+                \App\Models\Nilai::where('id', $nilai['id'])->update(['nilai' => $nilai['nilai']]);
+
+            }
         }
 
         return redirect()->route('siswas.index')->with('success', 'Nilai berhasil diupdate.');
@@ -55,6 +72,15 @@ class NilaiController extends Controller
 
     public function destroy($id)
     {
+        $siswa = \App\Models\Siswa::with('sekolah')->findOrFail($id);
+        $nilais = \App\Models\Nilai::where('siswa_id', $id)->get();
+        foreach ($nilais as $nilai) {
+            $mapel = \App\Models\Mapel::findOrFail($nilai['mapel_id']);
+            \App\Models\Aktifitas::create([
+                'user_id' => auth()->user()->id,
+                'aktifitas' => 'Hapus nilai '. $siswa->nama . ' (' . $siswa->nisn . ') dari ' . $siswa->sekolah->nama. ' (' . $siswa->sekolah->npsn . ')' . '. Mapel ' . $mapel->nama . ' dengan nilai: '. $nilai['nilai'],
+            ]);
+        }
         \App\Models\Nilai::where('siswa_id', $id)->first()->delete();
         return redirect()->route('siswas.index')->with('success', 'Nilai berhasil dihapus.');
     }

@@ -1,20 +1,5 @@
 'use client';
 
-import AppLayout from '@/layouts/app-layout';
-import type { BreadcrumbItem, Gugus, Kecamatan, Mapel, Sekolah, SharedData, Siswa, User } from '@/types';
-import { Head, router } from '@inertiajs/react';
-import axios from 'axios';
-
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { usePage } from '@inertiajs/react';
-import { AlertCircle } from 'lucide-react';
-import type React from 'react';
-import { useState } from 'react';
-
 import {
     AlertDialog,
     AlertDialogAction,
@@ -26,6 +11,19 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import AppLayout from '@/layouts/app-layout';
+import type { BreadcrumbItem, Gugus, Kecamatan, Mapel, Sekolah, SharedData, Siswa, User } from '@/types';
+import { Head, router, usePage } from '@inertiajs/react';
+import axios from 'axios';
+import { AlertCircle } from 'lucide-react';
+import type React from 'react';
+import { useState } from 'react';
+import { toast } from 'sonner';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -124,14 +122,13 @@ export default function Index({ korektor, mapels, sekolah }: { korektor: User; m
             },
             {
                 preserveScroll: true,
-                onSuccess: (page) => {
-                    // Fetch fresh data using Axios
+                onSuccess: () => {
+                    toast.success('Nilai berhasil disimpan');
                     fetchStudentsData();
                     setIsSubmitting(false);
-                    // console.log(page.props)
                 },
                 onError: (errors) => {
-                    console.error('Error create nilai:', errors);
+                    toast.error('Error menyimpan nilai:', errors);
                     setIsSubmitting(false);
                 },
             },

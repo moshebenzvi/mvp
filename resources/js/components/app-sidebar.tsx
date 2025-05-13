@@ -75,7 +75,7 @@ export function AppSidebar() {
                           },
                           {
                               title: 'Log Activity',
-                              href: '/logs',
+                              href: '/aktifitas',
                           },
                       ],
                   },

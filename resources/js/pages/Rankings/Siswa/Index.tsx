@@ -1,4 +1,5 @@
 import { DataTable } from '@/components/data-table';
+import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import type { BreadcrumbItem, RangkingSiswaController } from '@/types';
 import { Head } from '@inertiajs/react';
@@ -22,6 +23,9 @@ export default function Index({ rankings }: { rankings: RangkingSiswaController[
                 <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl md:min-h-min">
                     <DataTable columns={columns} data={rankings} title={'Ranking Siswa'} />
                 </div>
+                <Button asChild className="w-fit">
+                    <a href="/ranking/siswas/download">Download Data</a>
+                </Button>
             </div>
         </AppLayout>
     );

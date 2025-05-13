@@ -96,11 +96,11 @@ class DatabaseSeeder extends Seeder
         ])->assignRole('Operator')->id;
 
 
-        \App\Models\Nilai::factory(9*9)->create(); // siswa * 9
+        // \App\Models\Nilai::factory(9*9)->create(); // siswa * 9
         // Excel::import(new SekolahImport(), public_path('/import/Data_Sekolah.xlsx'));
         // Excel::import(new SiswaImport(), public_path('/import/Data_Siswa.xlsx'));
         // Excel::import(new UsersImport(), public_path('/import/Data_User.xlsx'));
-
+        // \App\Models\Aktifitas::factory(20)->create();
 
         // $this->call(NilaiSeeder::class);
     }

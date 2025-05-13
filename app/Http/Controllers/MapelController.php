@@ -22,6 +22,13 @@ class MapelController extends Controller
         $mapel = \App\Models\Mapel::findOrFail($id);
         $mapel->update(['active' => $validated['active']]); // Update only the 'active' field
 
+        $status = $validated['active'] ? 'activated' : 'deactivated';
+
+        \App\Models\Aktifitas::create([
+            'user_id' => auth()->user()->id,
+            'aktifitas' => 'Mapel '. $mapel->nama . ' ' . $status,
+        ]);
+
         return redirect()->route('mapels.index')->with('success', 'Mapel updated successfully.');
     }
 }

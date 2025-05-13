@@ -1,8 +1,8 @@
 import { DataTable } from '@/components/data-table';
 import AppLayout from '@/layouts/app-layout';
-import type { BreadcrumbItem, User } from '@/types';
+import { columns } from '@/pages/Aktifitas/tableColumns';
+import type { BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
-import { columns } from './tableColumns';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -10,18 +10,18 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '#',
     },
     {
-        title: 'User',
-        href: '/users',
+        title: 'Log Activity',
+        href: '/aktifitas',
     },
 ];
 
-export default function Index({ users }: { users: User[] }) {
+export default function Index({ aktifitas }: { aktifitas: any }) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Users" />
+            <Head title="Log Activity" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl md:min-h-min">
-                    <DataTable columns={columns} data={users} title={'Users'} />
+                    <DataTable columns={columns} data={aktifitas} title={'Log Activity'} />
                 </div>
             </div>
         </AppLayout>

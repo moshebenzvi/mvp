@@ -3,8 +3,6 @@ import AppLayout from '@/layouts/app-layout';
 import { columns } from '@/pages/Mapels/tableColumns';
 import type { BreadcrumbItem, Mapel } from '@/types';
 import { Head } from '@inertiajs/react';
-import { Search } from 'lucide-react';
-import { Input } from '@/components/ui/input';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
