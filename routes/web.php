@@ -3,43 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-// Route::get('/', function () {
-//     return Inertia::render('welcome');
-// })->name('home');
+Route::get('/', function () {
+    return Inertia::render('welcome');
+})->name('home');
 
-Route::get('/coba', function () {
-    return \App\Models\Siswa::with('sekolah.gugus.kecamatan', 'nilais.mapel')->limit(1)->get()
-        ->map(function ($siswa) {
-            return [
-                'id' => $siswa->id,
-                'nama' => $siswa->nama,
-                'kelamin' => $siswa->kelamin,
-                'nisn' => strlen($siswa->nisn) === 9 ? '0' . $siswa->nisn : $siswa->nisn,
-                'sekolah' => $siswa->sekolah->nama,
-                'npsn' => $siswa->sekolah->npsn,
-                'kecamatan' => $siswa->sekolah->gugus->kecamatan->nama,
-                'nilais' => $siswa->nilais->map(function ($nilai) {
-                    return [
-                        'id' => $nilai->id,
-                        'siswa_id' => $nilai->siswa_id,
-                        'mapel_id' => $nilai->mapel_id,
-                        'mapel' => $nilai->mapel->nama,
-                        'nilai' => $nilai->nilai,
-                    ];
-                })
-            ];
-        })
-    ;
-});
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/', function () {
-        return Inertia::render('dashboard');
-    })->name('home');
-
-    // Route::get('dashboard', function () {
-    //     return Inertia::render('dashboard');
-    // })->name('dashboard');
 
     Route::get('dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
     Route::get('dashboard/data', [\App\Http\Controllers\DashboardController::class, 'dashboardData'])->name('dashboard.data');
