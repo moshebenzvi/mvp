@@ -28,7 +28,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('aktifitas', \App\Http\Controllers\AktifitasController::class)->only(['index', 'store']);;
     });
 
-    Route::middleware(['role:Korektor'])->group(function () {
+    Route::middleware(['role:Operator Kecamatan'])->group(function () {
         Route::resource('nilais', \App\Http\Controllers\NilaiController::class)->only(['index', 'store']);
         ;
         Route::get('siswas/refresh', [\App\Http\Controllers\SiswaController::class, 'refresh'])->name('siswas.refresh');

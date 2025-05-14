@@ -1,8 +1,8 @@
 import { DataTableColumnHeader } from '@/components/data-table-column-header';
-import type { RangkingSekolahController } from '@/types';
+import type { RangkingSekolah } from '@/types';
 import { ColumnDef } from '@tanstack/react-table';
 
-export const columns: ColumnDef<RangkingSekolahController>[] = [
+export const columns: ColumnDef<RangkingSekolah>[] = [
     {
         accessorKey: 'sekolah_id',
         header: ({ column }) => <DataTableColumnHeader column={column} title="No" />,

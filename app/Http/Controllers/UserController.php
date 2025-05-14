@@ -14,7 +14,7 @@ class UserController extends Controller
                     return [
                         'id' => $user->id,
                         'name' => $user->name,
-                        'email' => $user->email,
+                        'username' => $user->username,
                         'role' => $user->roles->pluck('name')->first(),
                         'kecamatan' => $user->gugus->kecamatan->nama,
                         'gugus' => $user->gugus->gugus,

@@ -1,7 +1,7 @@
 import { DataTable } from '@/components/data-table';
 import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
-import type { BreadcrumbItem, RangkingSekolahController } from '@/types';
+import type { BreadcrumbItem, RangkingSekolah } from '@/types';
 import { Head } from '@inertiajs/react';
 import { columns } from './tableColumns';
 
@@ -15,7 +15,7 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '/ranking/sekolahs',
     },
 ];
-export default function Index({ rankings }: { rankings: RangkingSekolahController[] }) {
+export default function Index({ rankings }: { rankings: RangkingSekolah[] }) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Ranking Sekolah" />

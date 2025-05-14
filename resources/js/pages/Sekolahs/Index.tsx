@@ -1,6 +1,6 @@
 import { DataTable } from '@/components/data-table';
 import AppLayout from '@/layouts/app-layout';
-import type { BreadcrumbItem, SekolahController } from '@/types';
+import type { BreadcrumbItem, Sekolah } from '@/types';
 import { Head } from '@inertiajs/react';
 import { columns } from './tableColumns';
 
@@ -15,7 +15,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Index({ sekolahs }: { sekolahs: SekolahController[] }) {
+export default function Index({ sekolahs }: { sekolahs: Sekolah[] }) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Sekolah" />

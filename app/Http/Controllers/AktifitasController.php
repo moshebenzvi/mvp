@@ -9,16 +9,16 @@ class AktifitasController extends Controller
     public function index()
     {
         return inertia('Aktifitas/Index', [
-            'aktifitas' => \App\Models\Aktifitas::with('user')->get()
-            ->map(function ($aktifitas) {
-                return [
-                    'id' => $aktifitas->id,
-                    'name' => $aktifitas->user->name,
-                    'email' => $aktifitas->user->email,
-                    'aktifitas' => $aktifitas->aktifitas,
-                    'created_at' => $aktifitas->created_at,
-                ];
-            }),
+            'aktifitas' => \App\Models\Aktifitas::with('user')->orderByDesc('created_at')->get()
+                ->map(function ($aktifitas) {
+                    return [
+                        'id' => $aktifitas->id,
+                        'name' => $aktifitas->user->name,
+                        'username' => $aktifitas->user->username,
+                        'aktifitas' => $aktifitas->aktifitas,
+                        'created_at' => $aktifitas->created_at,
+                    ];
+                }),
         ]);
     }
 
@@ -29,15 +29,15 @@ class AktifitasController extends Controller
             'aktifitas' => ['required'],
         ]);
 
-        return Aktifitas::create($data);
+        return \App\Models\Aktifitas::create($data);
     }
 
-    public function show(Aktifitas $aktifitas)
+    public function show(\App\Models\Aktifitas $aktifitas)
     {
         return $aktifitas;
     }
 
-    public function update(Request $request, Aktifitas $aktifitas)
+    public function update(Request $request, \App\Models\Aktifitas $aktifitas)
     {
         $data = $request->validate([
             'user_id' => ['required', 'exists:users'],
@@ -49,7 +49,7 @@ class AktifitasController extends Controller
         return $aktifitas;
     }
 
-    public function destroy(Aktifitas $aktifitas)
+    public function destroy(\App\Models\Aktifitas $aktifitas)
     {
         $aktifitas->delete();
 

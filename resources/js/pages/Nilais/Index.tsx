@@ -32,7 +32,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Index({ korektor, mapels, sekolah }: { korektor: User; mapels: Mapel[]; sekolah: Sekolah[] }) {
+export default function Index({ operator_kecamatan, mapels, sekolah }: { operator_kecamatan: User; mapels: Mapel[]; sekolah: Sekolah[] }) {
     const { auth } = usePage<SharedData>().props;
     const [selectedSekolah, setSelectedSekolah] = useState<string>('');
     const [selectedMapel, setSelectedMapel] = useState<string>('');
@@ -42,8 +42,8 @@ export default function Index({ korektor, mapels, sekolah }: { korektor: User; m
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     // Extract kecamatan and gugus from user data
-    const kecamatanNama = (korektor as User & { gugus: Gugus & { kecamatan: Kecamatan } }).gugus.kecamatan.nama;
-    const gugusValue = (korektor as User & { gugus: Gugus }).gugus.gugus;
+    const kecamatanNama = (operator_kecamatan as User & { gugus: Gugus & { kecamatan: Kecamatan } }).gugus.kecamatan.nama;
+    const gugusValue = (operator_kecamatan as User & { gugus: Gugus }).gugus.gugus;
 
     // Fetch students data for the selected school and mapel
     const fetchStudentsData = async () => {

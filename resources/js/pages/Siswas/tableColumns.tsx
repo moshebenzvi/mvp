@@ -1,5 +1,5 @@
 import { DataTableColumnHeader } from '@/components/data-table-column-header';
-import type { SiswaController } from '@/types';
+import type { Siswa } from '@/types';
 import { ColumnDef } from '@tanstack/react-table';
 
 import { Button } from '@/components/ui/button';
@@ -9,11 +9,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { router } from '@inertiajs/react';
-import { Eye, MoreHorizontal, Pencil, Trash2 } from 'lucide-react';
+import { Eye, MoreHorizontal, Pencil } from 'lucide-react';
 // import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-export const columns: ColumnDef<SiswaController>[] = [
+export const columns: ColumnDef<Siswa>[] = [
     {
         accessorKey: 'id',
         header: ({ column }) => <DataTableColumnHeader column={column} title="No" />,
@@ -55,7 +55,7 @@ export const columns: ColumnDef<SiswaController>[] = [
     },
 ];
 
-function ActionCell({ siswa }: { siswa: SiswaController }) {
+function ActionCell({ siswa }: { siswa: Siswa }) {
     // const router = useRouter();
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [showViewDialog, setShowViewDialog] = useState(false);
@@ -101,10 +101,12 @@ function ActionCell({ siswa }: { siswa: SiswaController }) {
                         <Pencil className="mr-2 h-4 w-4" />
                         <span>Ubah Nilai</span>
                     </DropdownMenuItem>
+                    {/* 
                     <DropdownMenuItem onClick={() => setShowDeleteDialog(true)}>
                         <Trash2 className="mr-2 h-4 w-4" />
                         <span>Hapus Nilai</span>
-                    </DropdownMenuItem>
+                    </DropdownMenuItem> 
+                    */}
                 </DropdownMenuContent>
             </DropdownMenu>
 
@@ -165,7 +167,7 @@ function ActionCell({ siswa }: { siswa: SiswaController }) {
     );
 }
 
-function EditStudentDialog({ open, onOpenChange, siswa }: { open: boolean; onOpenChange: (open: boolean) => void; siswa: SiswaController }) {
+function EditStudentDialog({ open, onOpenChange, siswa }: { open: boolean; onOpenChange: (open: boolean) => void; siswa: Siswa }) {
     // const router = useRouter();
     const [formData, setFormData] = useState({
         id: siswa.id,
@@ -348,14 +350,18 @@ function EditStudentDialog({ open, onOpenChange, siswa }: { open: boolean; onOpe
                         </div>
                         */}
                     </div>
-                    <DialogFooter className='py-4'>
-                        <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-                            Batal
-                        </Button>
-                        <Button type="submit" disabled={submitting}>
-                            {submitting ? 'Menyimpan...' : 'Simpan'}
-                        </Button>
-                    </DialogFooter>
+                    {formData.nilais.length > 0 && (
+                        <>
+                            <DialogFooter className="py-4">
+                                <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+                                    Batal
+                                </Button>
+                                <Button type="submit" disabled={submitting}>
+                                    {submitting ? 'Menyimpan...' : 'Simpan'}
+                                </Button>
+                            </DialogFooter>
+                        </>
+                    )}
                 </form>
             </DialogContent>
         </Dialog>

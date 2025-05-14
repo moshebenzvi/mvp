@@ -15,8 +15,8 @@ export const columns: ColumnDef<User>[] = [
         header: ({ column }) => <DataTableColumnHeader column={column} title="Nama" />,
     },
     {
-        accessorKey: 'email',
-        header: ({ column }) => <DataTableColumnHeader column={column} title="Email" />,
+        accessorKey: 'username',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="Username" />,
     },
     {
         accessorKey: 'aktifitas',

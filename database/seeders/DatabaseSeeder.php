@@ -21,10 +21,10 @@ class DatabaseSeeder extends Seeder
     {
         Role::create(['name' => 'Admin']);
         Role::create(['name' => 'Dinas']);
-        Role::create(['name' => 'Operator']);
-        Role::create(['name' => 'Korektor']);
+        Role::create(['name' => 'Operator Sekolah']);
+        Role::create(['name' => 'Operator Kecamatan']);
 
-        $kecamatans = ['Panggul', 'Munjungan', 'Pule', 'Dongko', 'Tugu', 'Karangan', 'Kampak', 'Watulimo', 'Bendungan', 'Gandusari', 'Trenggalek', 'Pogalan', 'Durenan', 'Suruh'];
+        $kecamatans = ['Bendungan', 'Dongko', 'Durenan', 'Gandusari', 'Kampak', 'Karangan', 'Munjungan', 'Panggul', 'Pogalan', 'Pule', 'Suruh', 'Trenggalek', 'Tugu', 'Watulimo'];
         foreach ($kecamatans as $kecamatan) {
             \App\Models\Kecamatan::factory()->create([
                 'nama' => $kecamatan,
@@ -40,20 +40,20 @@ class DatabaseSeeder extends Seeder
         }
 
         $guguses = [
-            1 => 4,
-            2 => 3,
-            3 => 4,
-            4 => 4,
-            5 => 3,
+            1 => 2,
+            2 => 4,
+            3 => 3,
+            4 => 3,
+            5 => 2,
             6 => 2,
-            7 => 2,
-            8 => 3,
+            7 => 3,
+            8 => 4,
             9 => 2,
-            10 => 3,
-            11 => 3,
-            12 => 2,
+            10 => 4,
+            11 => 2,
+            12 => 3,
             13 => 3,
-            14 => 2,
+            14 => 3,
         ];
         foreach ($guguses as $kecamatan_id => $gugus) {
             for ($i = 1; $i <= $gugus; $i++) {
@@ -66,40 +66,46 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        \App\Models\Sekolah::factory(3)->create();
+        // \App\Models\Sekolah::factory(3)->create();
+        Excel::import(new SekolahImport(), public_path('/import/Data_Sekolah.xlsx'));
 
-        \App\Models\Siswa::factory(9)->create();
+        // \App\Models\Siswa::factory(9)->create();
+        Excel::import(new SiswaImport(), public_path('/import/Data_Siswa.xlsx'));
+
+        Excel::import(new UsersImport(), public_path('/import/Data_User.xlsx'));
 
         User::factory()->create([
+            'username' => 'admin',
             'name' => 'Admin User',
-            'email' => 'admin@admin.com',
-            'password' => bcrypt('password'),
+            // 'email' => 'admin@admin.com',
+            'password' => bcrypt('admin'),
         ])->assignRole('Admin');
 
-        $korektor = User::factory()->create([
+        $operator_kecamatan = User::factory()->create([
+            'username' => 'operator_kecamatan',
             'gugus_id' => \App\Models\Sekolah::inRandomOrder()->first()->gugus_id,
-            'name' => 'Korektor User',
-            'email' => 'korektor@korektor.com',
-            'password' => bcrypt('password'),
-        ])->assignRole('Korektor')->id;
+            'name' => 'Operator Kecamatan User',
+            // 'email' => 'operator_kecamatan@operator_kecamatan.com',
+            'password' => bcrypt('operator_kecamatan'),
+        ])->assignRole('Operator Kecamatan')->id;
 
         $dinas = User::factory()->create([
+            'username' => 'dinas',
             'name' => 'Dinas User',
-            'email' => 'dinas@dinas.com',
-            'password' => bcrypt('password'),
+            // 'email' => 'dinas@dinas.com',
+            'password' => bcrypt('dinas'),
         ])->assignRole('Dinas')->id;
 
         $operator = User::factory()->create([
+            'username' => 'operator_sekolah',
             'name' => 'Operator User',
-            'email' => 'operator@operator.com',
-            'password' => bcrypt('password'),
-        ])->assignRole('Operator')->id;
+            // 'email' => 'operator@operator.com',
+            'password' => bcrypt('operator_sekolah'),
+        ])->assignRole('Operator Sekolah')->id;
 
 
         // \App\Models\Nilai::factory(9*9)->create(); // siswa * 9
-        // Excel::import(new SekolahImport(), public_path('/import/Data_Sekolah.xlsx'));
-        // Excel::import(new SiswaImport(), public_path('/import/Data_Siswa.xlsx'));
-        // Excel::import(new UsersImport(), public_path('/import/Data_User.xlsx'));
+
         // \App\Models\Aktifitas::factory(20)->create();
 
         // $this->call(NilaiSeeder::class);

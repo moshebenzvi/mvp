@@ -24,7 +24,7 @@ export function AppSidebar() {
             title: 'Dashboard',
             href: '/dashboard',
         },
-        ...(String(userRole) === 'Korektor'
+        ...(String(userRole) === 'Operator Kecamatan'
             ? [
                   {
                       title: 'Input Nilai',

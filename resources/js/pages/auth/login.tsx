@@ -9,8 +9,9 @@ import { Label } from '@/components/ui/label';
 import AuthLayout from '@/layouts/auth-layout';
 
 type LoginForm = {
-    email: string;
-    password: string;
+    username: string;
+    // email: string;
+    // password: string;
     remember: boolean;
 };
 
@@ -21,15 +22,16 @@ interface LoginProps {
 
 export default function Login({ status }: LoginProps) {
     const { data, setData, post, processing, errors, reset } = useForm<Required<LoginForm>>({
-        email: '',
-        password: '',
+        username: '',
+        // email: '',
+        // password: '',
         remember: false,
     });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
         post(route('login'), {
-            onFinish: () => reset('password'),
+            onFinish: () => reset('username'),
         });
     };
 
@@ -44,42 +46,56 @@ export default function Login({ status }: LoginProps) {
             <form className="flex flex-col gap-6" onSubmit={submit}>
                 <div className="grid gap-6">
                     <div className="grid gap-2">
+                        <Label htmlFor="username">Username</Label>
+                        <Input
+                            id="username"
+                            type="text"
+                            required
+                            autoFocus
+                            tabIndex={1}
+                            autoComplete="username"
+                            value={data.username}
+                            onChange={(e) => setData('username', e.target.value)}
+                        />
+                        <InputError message={errors.username} />
+                    </div>
+
+                    {/* <div className="grid gap-2">
                         <Label htmlFor="email">Email address</Label>
                         <Input
                             id="email"
                             type="email"
                             required
-                            autoFocus
-                            tabIndex={1}
+                            tabIndex={2}
                             autoComplete="email"
                             value={data.email}
                             onChange={(e) => setData('email', e.target.value)}
                             placeholder="email@example.com"
                         />
                         <InputError message={errors.email} />
-                    </div>
+                    </div> */}
 
-                    <div className="grid gap-2">
+                    {/* <div className="grid gap-2">
                         <div className="flex items-center">
                             <Label htmlFor="password">Password</Label>
-                            {/* {canResetPassword && (
+                            {canResetPassword && (
                                 <TextLink href={route('password.request')} className="ml-auto text-sm" tabIndex={5}>
                                     Forgot password?
                                 </TextLink>
-                            )} */}
+                            )}
                         </div>
                         <Input
                             id="password"
                             type="password"
                             required
-                            tabIndex={2}
+                            tabIndex={3}
                             autoComplete="current-password"
                             value={data.password}
                             onChange={(e) => setData('password', e.target.value)}
                             placeholder="Password"
                         />
                         <InputError message={errors.password} />
-                    </div>
+                    </div> */}
 
                     {/* <div className="flex items-center space-x-3">
                         <Checkbox
