@@ -9,8 +9,8 @@ use Maatwebsite\Excel\Concerns\WithProperties;
 class RankingSiswaExport implements FromCollection, WithHeadings, WithProperties
 {
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
     public function collection()
     {
         return \App\Models\RankingSiswa::with('siswa.sekolah.gugus.kecamatan')->get()->sortByDesc('avg_nilai')->values()
@@ -21,15 +21,15 @@ class RankingSiswaExport implements FromCollection, WithHeadings, WithProperties
                     'sekolah' => $item->siswa->sekolah->nama,
                     'npsn' => $item->siswa->sekolah->npsn,
                     'kecamatan' => $item->siswa->sekolah->gugus->kecamatan->nama,
-                    'pabp' => $item->pabp,
-                    'pendidikan_pancasila' => $item->pendidikan_pancasila,
-                    'ipas' => $item->ipas,
-                    'bahasa_jawa' => $item->bahasa_jawa,
-                    'bahasa_indonesia' => $item->bahasa_indonesia,
-                    'seni_budaya' => $item->seni_budaya,
-                    'bahasa_inggris' => $item->bahasa_inggris,
-                    'pjok' => $item->pjok,
-                    'matematika' => $item->matematika,
+                    'pabp' => $item->PABP,
+                    'pendidikan_pancasila' => $item->PENDIDIKAN_PANCASILA,
+                    'ipas' => $item->IPAS,
+                    'bahasa_jawa' => $item->BAHASA_JAWA,
+                    'bahasa_indonesia' => $item->BAHASA_INDONESIA,
+                    'seni_budaya' => $item->SENI_BUDAYA,
+                    'bahasa_inggris' => $item->BAHASA_INGGRIS,
+                    'pjok' => $item->PJOK,
+                    'matematika' => $item->MATEMATIKA,
                     'avg_nilai' => $item->avg_nilai,
                     'ranking' => $key + 1,
                 ];
@@ -44,7 +44,15 @@ class RankingSiswaExport implements FromCollection, WithHeadings, WithProperties
             'Sekolah',
             'NPSN',
             'Kecamatan',
-            'PABP', 'PENDIDIKAN PANCASILA', 'IPAS', 'BAHASA JAWA', 'BAHASA INDONESIA', 'SENI BUDAYA', 'BAHASA INGGRIS', 'PJOK', 'MATEMATIKA',
+            'PABP',
+            'PENDIDIKAN PANCASILA',
+            'IPAS',
+            'BAHASA JAWA',
+            'BAHASA INDONESIA',
+            'SENI BUDAYA',
+            'BAHASA INGGRIS',
+            'PJOK',
+            'MATEMATIKA',
             'Rata-rata Nilai',
             'Ranking',
         ];
@@ -53,13 +61,13 @@ class RankingSiswaExport implements FromCollection, WithHeadings, WithProperties
     public function properties(): array
     {
         return [
-            'creator'        => 'Patrick Brouwers',
-            'title'          => 'Ranking Siswa Export',
-            'description'    => 'Ranking Siswa Terbaru',
-            'subject'        => 'Ranking Siswa',
-            'keywords'       => 'ranking,siswa,export,spreadsheet',
-            'category'       => 'Ranking Siswa',
-            'company'        => 'Dinas Pendidikan, Pemuda dan Olahraga Kabupaten Trenggalek',
+            'creator' => 'Patrick Brouwers',
+            'title' => 'Ranking Siswa Export',
+            'description' => 'Ranking Siswa Terbaru',
+            'subject' => 'Ranking Siswa',
+            'keywords' => 'ranking,siswa,export,spreadsheet',
+            'category' => 'Ranking Siswa',
+            'company' => 'Dinas Pendidikan, Pemuda dan Olahraga Kabupaten Trenggalek',
         ];
     }
 }

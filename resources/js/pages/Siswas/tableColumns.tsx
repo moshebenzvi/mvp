@@ -348,7 +348,7 @@ function EditStudentDialog({ open, onOpenChange, siswa }: { open: boolean; onOpe
                         </div>
                         */}
                     </div>
-                    <DialogFooter>
+                    <DialogFooter className='py-4'>
                         <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
                             Batal
                         </Button>

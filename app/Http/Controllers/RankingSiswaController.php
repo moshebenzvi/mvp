@@ -29,6 +29,6 @@ class RankingSiswaController extends Controller
 
     public function download()
     {
-        return Excel::download(new \App\Exports\RankingSiswaExport(), 'Ranking Siswa '.now().'.xlsx');
+        return Excel::download(new \App\Exports\RankingSiswaExport(), 'Ranking Siswa ' . now() . '.xlsx');
     }
 }

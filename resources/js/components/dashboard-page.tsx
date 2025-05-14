@@ -348,7 +348,7 @@ export default function DashboardPage() {
                                             <TableRow key={school.sekolah_id}>
                                                 <TableCell className="font-medium">{school.sekolah}</TableCell>
                                                 <TableCell className="font-medium">{school.npsn}</TableCell>
-                                                <TableCell className="font-medium">{school.kecamatan_nama}</TableCell>
+                                                <TableCell className="font-medium">{school.kecamatan}</TableCell>
                                                 <TableCell>
                                                     {school.pabp ? (
                                                         <Check className="h-4 w-4 text-green-500" />
