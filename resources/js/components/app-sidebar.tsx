@@ -22,13 +22,13 @@ export function AppSidebar() {
     const mainNavItems: NavItem[] = [
         {
             title: 'Dashboard',
-            href: '/dashboard',
+            href: route('dashboard'),
         },
         ...(String(userRole) === 'Operator Kecamatan'
             ? [
                   {
                       title: 'Input Nilai',
-                      href: '/nilais',
+                      href: route('nilais'),
                   },
               ]
             : []),
@@ -40,11 +40,11 @@ export function AppSidebar() {
                       items: [
                           {
                               title: 'Ranking Siswa',
-                              href: '/ranking/siswas',
+                              href: route('ranking.siswas.index'),
                           },
                           {
                               title: 'Ranking Sekolah',
-                              href: '/ranking/sekolahs',
+                              href: route('ranking.sekolahs.index'),
                           },
                       ],
                   },
@@ -59,23 +59,23 @@ export function AppSidebar() {
                       items: [
                           {
                               title: 'Sekolah',
-                              href: '/sekolahs',
+                              href: route('sekolahs.index'),
                           },
                           {
                               title: 'Siswa',
-                              href: '/siswas',
+                              href: route('siswas.index'),
                           },
                           {
                               title: 'Mata Pelajaran',
-                              href: '/mapels',
+                              href: route('mapels.index'),
                           },
                           {
                               title: 'User',
-                              href: '/users',
+                              href: route('users.index'),
                           },
                           {
                               title: 'Log Activity',
-                              href: '/aktifitas',
+                              href: route('aktifitas.index'),
                           },
                       ],
                   },
@@ -89,7 +89,7 @@ export function AppSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href="/dashboard" prefetch>
+                            <Link href={route('dashboard')} prefetch>
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>

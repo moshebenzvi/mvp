@@ -72,14 +72,12 @@ class DatabaseSeeder extends Seeder
         // \App\Models\Siswa::factory(9)->create();
         Excel::import(new SiswaImport(), public_path('/import/Data_Siswa.xlsx'));
 
-        Excel::import(new UsersImport(), public_path('/import/Data_User.xlsx'));
-
-        User::factory()->create([
-            'username' => 'admin',
-            'name' => 'Admin User',
-            // 'email' => 'admin@admin.com',
-            'password' => bcrypt('admin'),
-        ])->assignRole('Admin');
+        // User::factory()->create([
+        //     'username' => 'admin',
+        //     'name' => 'Admin User',
+        //     // 'email' => 'admin@admin.com',
+        //     'password' => bcrypt('admin'),
+        // ])->assignRole('Admin');
 
         $operator_kecamatan = User::factory()->create([
             'username' => 'operator_kecamatan',
@@ -103,6 +101,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('operator_sekolah'),
         ])->assignRole('Operator Sekolah')->id;
 
+        Excel::import(new UsersImport(), public_path('/import/Data_User.xlsx'));
 
         // \App\Models\Nilai::factory(9*9)->create(); // siswa * 9
 

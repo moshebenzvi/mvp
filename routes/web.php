@@ -25,7 +25,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('siswas', [\App\Http\Controllers\SiswaController::class, 'index'])->name('siswas.index');
 
         Route::resource('nilais', \App\Http\Controllers\NilaiController::class)->only(['index', 'update', 'destroy']);
-        Route::resource('aktifitas', \App\Http\Controllers\AktifitasController::class)->only(['index', 'store']);;
+        Route::resource('aktifitas', \App\Http\Controllers\AktifitasController::class)->only(['index', 'store']);
+        ;
     });
 
     Route::middleware(['role:Operator Kecamatan'])->group(function () {

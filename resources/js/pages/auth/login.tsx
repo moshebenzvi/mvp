@@ -1,3 +1,4 @@
+import logoLogin from '@/images/logo_login.png';
 import { Head, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
@@ -40,13 +41,13 @@ export default function Login({ status }: LoginProps) {
             <Head title="Log in" />
 
             <div className="mb-6 flex flex-col items-center">
-                <img src="/logo_login.png" alt="Logo" className="h-16 w-auto" />
+                <img src={logoLogin} alt="Logo" className="h-16 w-auto" />
             </div>
 
             <form className="flex flex-col gap-6" onSubmit={submit}>
                 <div className="grid gap-6">
                     <div className="grid gap-2">
-                        <Label htmlFor="username">Username</Label>
+                        <Label htmlFor="username">Unicode</Label>
                         <Input
                             id="username"
                             type="text"
