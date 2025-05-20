@@ -28,7 +28,7 @@ export function AppSidebar() {
             ? [
                   {
                       title: 'Input Nilai',
-                      href: route('nilais'),
+                      href: route('nilais.index'),
                   },
               ]
             : []),
