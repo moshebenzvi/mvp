@@ -56,7 +56,7 @@ export default function Index({ operator_kecamatan, mapels, sekolah }: { operato
 
         try {
             // Make an API request to get the latest student data
-            const response = await axios.get(`/siswas/refresh`, {
+            const response = await axios.get(route('siswas.refresh'), {
                 params: {
                     sekolah_id: sekolahId,
                     mapel_id: mapelId,
@@ -70,8 +70,8 @@ export default function Index({ operator_kecamatan, mapels, sekolah }: { operato
 
                 return {
                     ...siswa,
-                    // tempNilai: existingNilai ? existingNilai.nilai : '',
-                    tempNilai: existingNilai ? existingNilai.nilai : (Math.random() * 100).toFixed(2), // Use random value for testing
+                    tempNilai: existingNilai ? existingNilai.nilai : '',
+                    // tempNilai: existingNilai ? existingNilai.nilai : (Math.random() * 100).toFixed(2), // Use random value for testing
                     hasExistingNilai: !!existingNilai, // Flag to track if nilai already exists
                 };
             });
@@ -115,7 +115,7 @@ export default function Index({ operator_kecamatan, mapels, sekolah }: { operato
         // console.log('Data to submit:', submissionData);
 
         router.post(
-            '/nilais',
+            route('nilais.store'), // Adjust the route as per your backend
             {
                 _method: 'POST',
                 submissionData: submissionData,

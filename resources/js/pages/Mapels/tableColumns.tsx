@@ -30,7 +30,7 @@ export const columns: ColumnDef<Mapel>[] = [
             const isActive = row.getValue<boolean>('active');
 
             const updateMapel = (checked: boolean) => {
-                router.post(`/mapels/${id}`, {
+                router.post(route('mapels.update', id), {
                     _method: 'PUT', // Specify the HTTP method override
                     active: checked, // Pass the updated active state
                 }, {
@@ -46,7 +46,7 @@ export const columns: ColumnDef<Mapel>[] = [
                         onCheckedChange={updateMapel}
                     />
                 </div>
-            );                   
+            );
         },
     }
 ];

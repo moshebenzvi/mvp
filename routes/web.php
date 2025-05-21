@@ -39,11 +39,3 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';
-
-//todo: sekolah: download data sekolah
-//todo: siswa: unduh dan upload siswa, edit nilai siswa
-//todo: log activity
-//todo: notifikasi input nilai sebelum submit
-//todo: pemeringkatan: unduh selengkapnya, selector
-//todo: evaluasi role
-//todo: assets
