@@ -6,17 +6,17 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
     base: '/ranking/', // Add this line for subdirectory deployment
-    server: {
-        host: 'dikpora.trenggalekkab.go.id',
-        port: 5173,
-        proxy: {
-            '/sipringis': {
-                target: 'dikpora.trenggalekkab.go.id',
-                changeOrigin: true,
-                rewrite: (path) => path.replace(/^\/ranking/, ''),
-            },
-        },
-    },
+    // server: {
+    //     host: 'dikpora.trenggalekkab.go.id',
+    //     port: 5173,
+    //     proxy: {
+    //         '/sipringis': {
+    //             target: 'dikpora.trenggalekkab.go.id',
+    //             changeOrigin: true,
+    //             rewrite: (path) => path.replace(/^\/ranking/, ''),
+    //         },
+    //     },
+    // },
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.tsx'],

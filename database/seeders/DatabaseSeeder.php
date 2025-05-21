@@ -79,27 +79,27 @@ class DatabaseSeeder extends Seeder
         //     'password' => bcrypt('admin'),
         // ])->assignRole('Admin');
 
-        $operator_kecamatan = User::factory()->create([
-            'username' => 'operator_kecamatan',
-            'gugus_id' => \App\Models\Sekolah::inRandomOrder()->first()->gugus_id,
-            'name' => 'Operator Kecamatan User',
-            // 'email' => 'operator_kecamatan@operator_kecamatan.com',
-            'password' => bcrypt('operator_kecamatan'),
-        ])->assignRole('Operator Kecamatan')->id;
+        // $operator_kecamatan = User::factory()->create([
+        //     'username' => 'operator_kecamatan',
+        //     'gugus_id' => \App\Models\Sekolah::inRandomOrder()->first()->gugus_id,
+        //     'name' => 'Operator Kecamatan User',
+        //     // 'email' => 'operator_kecamatan@operator_kecamatan.com',
+        //     'password' => bcrypt('operator_kecamatan'),
+        // ])->assignRole('Operator Kecamatan')->id;
 
-        $dinas = User::factory()->create([
-            'username' => 'dinas',
-            'name' => 'Dinas User',
-            // 'email' => 'dinas@dinas.com',
-            'password' => bcrypt('dinas'),
-        ])->assignRole('Dinas')->id;
+        // $dinas = User::factory()->create([
+        //     'username' => 'dinas',
+        //     'name' => 'Dinas User',
+        //     // 'email' => 'dinas@dinas.com',
+        //     'password' => bcrypt('dinas'),
+        // ])->assignRole('Dinas')->id;
 
-        $operator = User::factory()->create([
-            'username' => 'operator_sekolah',
-            'name' => 'Operator User',
-            // 'email' => 'operator@operator.com',
-            'password' => bcrypt('operator_sekolah'),
-        ])->assignRole('Operator Sekolah')->id;
+        // $operator = User::factory()->create([
+        //     'username' => 'operator_sekolah',
+        //     'name' => 'Operator User',
+        //     // 'email' => 'operator@operator.com',
+        //     'password' => bcrypt('operator_sekolah'),
+        // ])->assignRole('Operator Sekolah')->id;
 
         Excel::import(new UsersImport(), public_path('/import/Data_User.xlsx'));
 
